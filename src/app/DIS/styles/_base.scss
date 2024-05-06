@@ -1,0 +1,39 @@
+@import "variables";
+
+html {
+  //font-size: $font-size-root;
+
+  @media screen and (min-width: 1500px) {
+    font-size: calc(
+      0.85rem + (40 - 16) * (100vw - 1500px) / (3840 - 1500)
+    );
+  }
+
+  @media screen and (min-width: 3840px) {
+    font-size: calc(1.25vw);
+  }
+}
+
+body {
+  font-family: Lato, Helvetica, sans-serif;
+  font-size: $font-size-base;
+  background: $white;
+  color: $gray-800;
+  margin: 0;
+
+  @media screen and (min-width: 1500px) {
+    font-size: calc(
+      1rem + (40 - 16) * (100vw - 1500px) / (3840 - 1500)
+    );
+  }
+
+  @media screen and (min-width: 3840px) {
+    font-size: calc(1.25vw);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}

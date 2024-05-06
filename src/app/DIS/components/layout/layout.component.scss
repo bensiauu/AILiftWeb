@@ -1,0 +1,125 @@
+@import "variables";
+
+$dynamic-content-margin: max(15vw, 15rem);
+$dynamic-content-margin-hidden: max(1.5vw, 1.5rem);
+$border-color: #EBEBEB;
+
+.Layout {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: auto 1fr;
+  transition: 0.2s;
+  margin-left: $dynamic-content-margin-hidden;
+
+  border-left: 1px solid $border-color;
+
+  app-sidebar {
+    visibility: hidden;
+  }
+  &.show-menu {
+    margin-left: $dynamic-content-margin;
+
+    app-sidebar {
+      visibility: visible;
+    }
+    .expanded-navigation {
+      display: block;
+    }
+    .sidebar-toggle {
+      visibility: hidden;
+      .hide {
+        display:block;
+      }
+      .show {
+        display:none;
+      }
+    }
+  }
+}
+
+.AppBar {
+  position: sticky;
+  top: 0;
+  z-index: $z-index-navigation - 1;
+  background: $white;
+  //border: $border-100;
+  display: flex;
+  padding: 0 3rem 0 1rem;
+  align-items: center;
+
+
+  .expanded-navigation {
+    height: 100vh;
+    width:2rem;
+    position: absolute;
+    top: 0;
+    left: -1rem;
+    background: transparent;
+    display: none;
+    &:hover {
+      &~.sidebar-toggle {
+        visibility: visible;
+      }
+    }
+  }
+  &__title {
+    color: $primary !important;
+
+  }
+
+  &__title, .sidebar-toggle {
+    font-size: $font-size-xl;
+    font-weight: bolder;
+    color: $gray-900;
+    padding: 1.5rem 0;
+    //margin: 0 3rem 0 1rem;
+    margin: 0 auto;
+  }
+
+  .sidebar-toggle {
+    position: absolute;
+    left:-1rem;
+    top: 5rem;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
+    border-radius: 50%;
+    border: 2px solid $border-color;
+    padding: 0;
+    color: $font-color;
+    background: $white;
+    .hide {
+      display:none;
+    }
+    .show {
+      display:block;
+    }
+    &:hover {
+      cursor: pointer;
+      visibility: visible;
+      color: $white;
+      background: $primary;
+      border-color: $primary;
+    }
+  }
+
+  &__nav {
+    flex: 1;
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+    > * {
+      padding-left: 1rem;
+    }
+  }
+}
+
+.AppMain {
+  grid-row: 2 / -1;
+  padding: 1rem 3rem 2.5rem 3rem;
+  overflow-y: auto;
+}

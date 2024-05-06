@@ -1,0 +1,16 @@
+{
+  "sample": {
+    "heading" : "图表，表格标记与更多 ",
+    "heading-description": "目标是为了有客制化组件 （如果是必须的， 而且KendoUI无法提供）+ 客制化组件的设计必须与整体设计一致"
+  },
+  "common": {
+    "block-ui": {
+      "loading-message": "加载当中"
+    }
+  },
+  "profile-setting": {
+    "title": "账户",
+    "label_darkmode": "黑暗模式",
+    "label_language": "语言"
+  }
+}

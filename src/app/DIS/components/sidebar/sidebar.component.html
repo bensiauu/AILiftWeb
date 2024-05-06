@@ -1,0 +1,69 @@
+<!-- Sidebar that becomes toggleable on smaller screens -->
+<aside *ngIf="!isLoginView()" class="Sidebar">
+
+  <!-- Logo -->
+  <img class="Sidebar__logo" src="assets/img/astar-logo.png" alt="SIMTech Logo" />
+  <!-- Category title and items -->
+  <div class="Sidebar__menu" *ngIf="isLoggedIn$ | async">
+    <div class="dis-custom-menu-bar">
+      <div class="dis-custom-panelbar-item"  *ngFor="let menuGroup of menuGroups; index as i">
+        <div *ngIf="menuGroup.link"  [routerLink]="menuGroup.link" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="updateName(menuGroup.group)">
+          <h4 class="Sidebar__menuCategoryTitle no-child"    [routerLink]="menuGroup.link" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="updateName(menuGroup.group)">
+            <kendo-icon [name]="menuGroup.icon" class="me-3" ></kendo-icon>{{ menuGroup.group }}
+          </h4>
+        </div>
+        <div *ngIf="!menuGroup.link" >
+          <kendo-panelbar  class="dis-custom-menu-bar"  >
+            <kendo-panelbar-item   class="dis-custom-panelbar-item"
+                                   [expanded]="showFirstPanelItems(i)"
+                                >
+              <ng-template kendoPanelBarItemTitle >
+                <div>
+                  <h4 class="Sidebar__menuCategoryTitle"  > <kendo-icon [name]="menuGroup.icon" class="me-3" ></kendo-icon>{{ menuGroup.group }}</h4>
+                </div>
+              </ng-template>
+              <kendo-panelbar-item class="dis-custom-panelbar-child"
+                                   *ngFor="let item of menuGroup.items"  [routerLink]="item.link" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="updateName(item.name)">
+                <ng-template kendoPanelBarItemTitle>
+                  <ng-container>
+                    <a class="side-bar-links" >
+                      <kendo-icon [name]="item.icon"></kendo-icon>
+                      {{ item.name }}
+                    </a>
+                  </ng-container>
+                </ng-template>
+              </kendo-panelbar-item>
+            </kendo-panelbar-item>
+          </kendo-panelbar>
+        </div>
+      </div>
+    </div>
+    <!-- FIXME: When menuGroup has no items for current elevation, category should not appear -->
+<!--    <kendo-panelbar  class="dis-custom-menu-bar"  >-->
+
+<!--        <kendo-panelbar-item   class="dis-custom-panelbar-item"  *ngFor="let menuGroup of menuGroups; index as i"-->
+<!--                               [expanded]="showFirstPanelItems(i)"-->
+<!--                               [routerLink]="menuGroup.link" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="updateName(menuGroup.group)"-->
+<!--                            >-->
+<!--          <ng-template kendoPanelBarItemTitle >-->
+<!--            <div>-->
+<!--              <h4 class="Sidebar__menuCategoryTitle"  > <kendo-icon [name]="menuGroup.icon" class="me-3" ></kendo-icon>{{ menuGroup.group }}</h4>-->
+<!--            </div>-->
+<!--          </ng-template>-->
+
+<!--          <kendo-panelbar-item class="dis-custom-panelbar-child"-->
+<!--                               *ngFor="let item of menuGroup.items"  [routerLink]="item.link" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" (click)="updateName(item.name)">-->
+<!--            <ng-template kendoPanelBarItemTitle>-->
+<!--              <ng-container>-->
+<!--                <a class="side-bar-links" >-->
+<!--                  <kendo-icon [name]="item.icon"></kendo-icon>-->
+<!--                  {{ item.name }}-->
+<!--                </a>-->
+<!--              </ng-container>-->
+<!--            </ng-template>-->
+<!--          </kendo-panelbar-item>-->
+
+<!--        </kendo-panelbar-item>-->
+<!--    </kendo-panelbar>-->
+  </div>
+</aside>

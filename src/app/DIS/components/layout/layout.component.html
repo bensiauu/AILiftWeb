@@ -1,0 +1,60 @@
+<div class="Layout" [ngClass]="{'show-menu': !isMenuCollapsed }" *ngIf="dataReady">
+  <div class="AppBar" [ngClass]="{ 'is-login-view': isLoginView()}">
+    <!-- Hamburger -->
+    <div class="expanded-navigation"></div>
+    <span class="sidebar-toggle" (click)="menuToggle();" *ngIf="isSideMenuSelected">
+
+      <span class="k-icon k-i-arrow-chevron-left hide"></span>
+      <span class="k-icon k-i-arrow-chevron-right show"></span>
+    </span>
+    <div>
+      <h1 class="AppBar__title">{{ appName }}</h1>
+    </div>
+
+    <app-horizontal-menu  *ngIf="!isSideMenuSelected"></app-horizontal-menu>
+    <div class="AppBar__nav">
+      <!-- Translation Panel -->
+
+      <kendo-dropdownlist *ngIf="isSelectionEnabled" [data]="languages"  textField="text" (valueChange)="languageChange($event)"
+                          valueField="value" [(ngModel)]="languageSelected">
+      </kendo-dropdownlist>
+
+      <!-- Notifications (Remove if not required) -->
+      <app-notifications-menu
+        *ngIf="isNotificationEnabled && isLoggedIn$ | async"
+        [notifications]="notifications"
+        [(currentMenu)]="currentFocusedMenu"
+        [onNotificationClick]="onNotificationClick"
+      ></app-notifications-menu>
+      <!-- Profile -->
+      <app-profile-menu [user]="user" [(currentMenu)]="currentFocusedMenu">
+        <!-- Add additional actions below. Route to your pages. -->
+        <kendo-card-actions orientation="vertical" class="align-items-center py-2" layout="stretched">
+          <!-- Change user role/password/email etc. -->
+          <span>Dark Mode</span>
+          <kendo-switch [(ngModel)]="isDarkMode"  (valueChange)="onThemeChange($event)"></kendo-switch>
+        </kendo-card-actions>
+        <!-- Add additional actions below. Route to your pages. -->
+        <kendo-card-actions orientation="horizontal" layout="stretched">
+          <!-- Change user role/password/email etc. -->
+          <button kendoButton look="flat" [routerLink]="'./setting'">
+            User Settings
+          </button>
+        </kendo-card-actions>
+        <kendo-card-actions orientation="horizontal" layout="stretched">
+          <!-- MCT/DIS will handle auth. -->
+          <button kendoButton look="flat" (click)="logout()">
+            Logout
+          </button>
+        </kendo-card-actions>
+      </app-profile-menu>
+    </div>
+  </div>
+
+  <!-- Side Bar -->
+  <app-sidebar *ngIf="isSideMenuSelected"></app-sidebar>
+  <main class="AppMain" [ngClass]="{ 'is-login-view': isLoginView() }">
+    <router-outlet></router-outlet>
+    <div kendoDialogContainer></div>
+  </main>
+</div>

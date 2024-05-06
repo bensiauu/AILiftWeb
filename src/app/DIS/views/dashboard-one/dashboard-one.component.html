@@ -1,0 +1,72 @@
+<div>
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+
+            <div class="col-12">
+              <app-indicator-custom-sample
+                [name]="'Machine #2'"
+                [group]="'Machine Group #2'"
+                [callout]="'96%'"
+                [details]="['Start: 20210420 11:11AM', 'End: 20210420 11:11AM']"
+                [nextRouteLink]="'/dashboard-three'"
+              ></app-indicator-custom-sample> <!--if you dont require nextRouteLink, you can remove it to prevent it from linking to other pages-->
+            </div>
+            <div class="col-12 mt-3">
+              <section class="chart">
+                <kendo-chart class="vh-50">
+                  <kendo-chart-title text="Units sold" [align]="'left'" [font]="chartConfig.mainTitleFont"></kendo-chart-title>
+                  <kendo-chart-category-axis>
+                    <kendo-chart-category-axis-item
+                      [categories]="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']"
+                      [title]="{ text: 'Months' }"
+                    >
+                    </kendo-chart-category-axis-item>
+                  </kendo-chart-category-axis>
+                  <kendo-chart-series>
+                    <kendo-chart-series-item
+                      type="area"
+                      [data]="[123, 276, 310, 212, 240, 156, 98]"
+                    >
+                    </kendo-chart-series-item>
+                    <kendo-chart-series-item
+                      type="area"
+                      [data]="[165, 210, 287, 144, 190, 167, 212]"
+                    >
+                    </kendo-chart-series-item>
+                    <kendo-chart-series-item
+                      type="area"
+                      [data]="[56, 140, 195, 46, 123, 78, 95]"
+                    >
+                    </kendo-chart-series-item>
+                  </kendo-chart-series>
+                </kendo-chart>
+              </section>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="col-12 col-md-8">
+      <section class="content">
+        <h3>Products</h3>
+        <kendo-grid [data]="data" class="vh-70"
+                    [pageSize]="20"
+                    [skip]="0"
+                    [sortable]="true"
+                    [pageable]="true">
+          <kendo-grid-column
+            *ngFor="let colname of ['ProductID', 'ProductName', 'QuantityPerUnit']"
+            [field]="colname"
+          ></kendo-grid-column>
+        </kendo-grid>
+      </section>
+    </div>
+  </div>
+
+</div>
+
