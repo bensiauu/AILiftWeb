@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import {chartConfig} from "@dis/settings/chart.config";
+import { HttpClient } from '@angular/common/http';
+import { Trip } from './interfaces/trip.interface';
+import { ListViewModule } from '@progress/kendo-angular-listview';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -7,29 +10,40 @@ import {chartConfig} from "@dis/settings/chart.config";
 })
 export class DashboardComponent {
 
-  chartConfig = chartConfig;
-  data = [75,100-75];
-  ColorSeries=[];
-  lift_cond_desc = "GOOD";
+  liftData: Trip[] = [];
+  firstAndLastTimestamps: string[] = [];
 
-  public gridView: any[];
-
-  public mySelection: string[] = [];
-
-  labelContent(e: any): string {
-    return e.value + '%';
-  }
-
-
-
-  
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    if (this.lift_cond_desc == "GOOD") {
-      this.ColorSeries = ['#2dce89', 'grey'];
+    this.http.get<Trip[]>('http://127.0.0.1:5000/api/trips').subscribe(data => {
+      this.liftData = data['trips'];
+      this.extractFirstAndLastTimestamps();
+    });
+  }
 
-    } else {
-      this.ColorSeries = ['#f5365c', '#40444a'];
+  extractFirstAndLastTimestamps(): void {
+    if (this.liftData.length > 0 && this.liftData[0].lbb_data?.length > 0) {
+      const trip = this.liftData[0];
+      const firstTimestamp = trip.lbb_data[0]?.timestamp;
+      const lastTimestamp = trip.lbb_data[trip.lbb_data.length - 1]?.timestamp;
+      this.firstAndLastTimestamps = [firstTimestamp, lastTimestamp];
     }
   }
+
+  get categoryAxis(): any {
+    return {
+        labels: {
+            content: (e: any) => {
+                const index = e.index;
+                if (index === 0) {
+                    return this.firstAndLastTimestamps[0];
+                } else if (index === this.liftData[0].lbb_data.length - 1) {
+                    return this.firstAndLastTimestamps[1];
+                }
+                return '';
+            }
+        }
+    }
+}
 }

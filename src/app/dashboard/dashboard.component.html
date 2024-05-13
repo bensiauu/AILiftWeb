@@ -1,115 +1,51 @@
 <div>
     <div class="row">
-      <div class="col-8">
-        <div class="col-12">
-          <section class="content">
-            <kendo-chart class=" vh-lg-30 vh-xl-30">
-                <kendo-chart-title text="Units sold"></kendo-chart-title>
-                <kendo-chart-category-axis>
-                  <kendo-chart-category-axis-item
-                    [categories]="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']"
-                    [title]="{ text: 'Months' }"
-                  >
-                  </kendo-chart-category-axis-item>
-                </kendo-chart-category-axis>
+        <div class="col-6">
+            <section class="content">
+            <kendo-chart style="pointer-events: none; width: 600px;" *ngIf="liftData && liftData.length > 0 && liftData[0].lbb_data" [transitions]="false" [categoryAxis]="categoryAxis">
                 <kendo-chart-series>
-
-                  <kendo-chart-series-item
-                    type="line"
-                    [data]="[56, 140, 195, 46, 123, 78, 95]"
-                  >
-                  </kendo-chart-series-item>
+                    <kendo-chart-series-item [style] = "normal" [markers]="{visible: false}" type="line" [data]="liftData[0].lbb_data" field="x" categoryField="timestamp">
+                    </kendo-chart-series-item>
                 </kendo-chart-series>
-              </kendo-chart>
-              <kendo-chart class=" vh-lg-30 vh-xl-30">
-                <kendo-chart-title text="Units sold"></kendo-chart-title>
-                <kendo-chart-category-axis>
-                  <kendo-chart-category-axis-item
-                    [categories]="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']"
-                    [title]="{ text: 'Months' }"
-                  >
-                  </kendo-chart-category-axis-item>
-                </kendo-chart-category-axis>
-                <kendo-chart-series>
-
-                  <kendo-chart-series-item
-                    type="line"
-                    [data]="[56, 140, 195, 46, 123, 78, 95]"
-                  >
-                  </kendo-chart-series-item>
-                </kendo-chart-series>
-              </kendo-chart>
-              <kendo-chart class=" vh-lg-30 vh-xl-30">
-                <kendo-chart-title text="Units sold"></kendo-chart-title>
-                <kendo-chart-category-axis>
-                  <kendo-chart-category-axis-item
-                    [categories]="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul']"
-                    [title]="{ text: 'Months' }"
-                  >
-                  </kendo-chart-category-axis-item>
-                </kendo-chart-category-axis>
-                <kendo-chart-series>
-
-                  <kendo-chart-series-item
-                    type="line"
-                    [data]="[56, 140, 195, 46, 123, 78, 95]"
-                  >
-                  </kendo-chart-series-item>
-                </kendo-chart-series>
-              </kendo-chart>
-          </section>
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="row">
-          <div class="col-12">
-            <section class="chart">
-              <kendo-chart
-                [title]="{ text: 'Anomaly Detection', font: chartConfig.mainTitleFont, align: 'left'}"
-                class=" vh-lg-30 vh-xl-30" [transitions]="false" [seriesColors]="ColorSeries">
-                <ng-template kendoChartDonutCenterTemplate>
-                    <!-- <h2 class="subtle">{{spindle_cond_prob}}%</h2> -->
-                    <!-- <span class="subtle" style="text-align:center;margin:0px;">(%)</span> -->
-                    <span class="subtle" style="text-align:center;margin:0px;">{{lift_cond_desc}}</span> 
-                </ng-template>
-                <kendo-chart-series>
-                  <kendo-chart-series-item
-                    type="donut"
-                    [data]="data"
-                    [holeSize]="68"
-                    
-                  >
-                    <kendo-chart-series-item-labels
-                      [content]="labelContent"
-                      color="#fff"
-                      background="none"
-                    >
-                    </kendo-chart-series-item-labels>
-                  </kendo-chart-series-item>
-                </kendo-chart-series>
-                <kendo-chart-legend [visible]="false"></kendo-chart-legend>
-              </kendo-chart>
+                </kendo-chart>
             </section>
-  
-          </div>
-          <div class="col-12 mt-4">
-            <section class="chart">
-                <h3>Trip Details</h3>
+        </div>
+        <div class="col-6">
+            <section class="content">
+            <kendo-chart style="width: 600px; pointer-events: none;" *ngIf="liftData && liftData.length > 0 && liftData[0].lbb_data" [transitions]="false" [categoryAxis]="categoryAxis">
+                <kendo-chart-series>
+                    <kendo-chart-series-item [style] = "normal" [markers]="{visible: false}" type="line" [data]="liftData[0].lbb_data" field="y" categoryField="timestamp">
+                    </kendo-chart-series-item>
+                </kendo-chart-series>
+                </kendo-chart>
+            </section>
+        </div>
+
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <section class="content">
                 <div>
-                    <p><span>Trip NO:</span> <span>100</span></p>
-                    <p><span>From Floor:</span> <span>4</span></p> 
-                    <p><span>To Floor:</span> <span>1</span></p>
-                    <p><span>Lift Name:</span> <span>SL00909</span></p>
-                    <p><span>Start Time:</span> <span>2024-05-02 10:20:01</span></p>
-                    <p><span>End Time:</span> <span>2024-05-02 10:20:05</span></p>
+                    <kendo-chart style="width: 600px; pointer-events: none;" *ngIf="liftData && liftData.length > 0 && liftData[0].lbb_data" [transitions]="false" [categoryAxis]="categoryAxis">
+                        <kendo-chart-series>
+                            <kendo-chart-series-item [style]="normal" [markers]="{visible: false}" type="line" [data]="liftData[0].lbb_data" field="z" categoryField="timestamp">
+                            </kendo-chart-series-item>
+                        </kendo-chart-series>
+                    </kendo-chart>
                 </div>
             </section>
-          </div>
         </div>
-  
-      </div>
-  
     </div>
-  </div>
+    <div>
+                <kendo-listview
+            [data]="liftData"
+            [itemClass]="{ 'item-border': true }"
+        >
+    <ng-template kendoListViewItemTemplate let-dataItem="dataItem">
+        {{ dataItem.productName }}
+    </ng-template>
+</kendo-listview>
+    </div>
+</div>
   
   

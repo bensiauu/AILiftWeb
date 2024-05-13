@@ -1,6 +1,6 @@
 @import "variables";
 
-$dynamic-content-margin:  max(15vw, 15rem);
+$dynamic-content-margin:  max(11vw, 11rem);
 
 
 .Sidebar {
@@ -12,7 +12,7 @@ $dynamic-content-margin:  max(15vw, 15rem);
   width: $dynamic-content-margin;
   height: 100vh;
   padding: 1rem 0.75em;
-  transform: translateX(-100%);
+  transform: translateX(-110%);
 
   ::-webkit-scrollbar{
     display: none;

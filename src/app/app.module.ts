@@ -29,6 +29,7 @@ import { MenuModule } from '@progress/kendo-angular-menu';
 import { IndicatorsModule } from '@progress/kendo-angular-indicators';
 import { LabelModule } from '@progress/kendo-angular-label';
 import { InputsModule } from '@progress/kendo-angular-inputs';
+import { ListViewModule } from '@progress/kendo-angular-listview';
 
 // Components
 import { NotificationsMenuComponent } from './DIS/components/notifications-menu/notifications-menu.component';
@@ -125,6 +126,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     PDFModule,
     ExcelModule,
     ChartsModule,
+    ListViewModule,
     MenuModule,
     IndicatorsModule,
     LabelModule,
