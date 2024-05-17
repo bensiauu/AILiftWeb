@@ -1,0 +1,48 @@
+:host {
+    display: block;
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .header {
+    font-size: 1.8em;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .trip-list {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .charts-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .chart-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 45%;  /* Smaller width to fit two charts in one row */
+    box-sizing: border-box;
+  }
+  
+  .content {
+    margin-bottom: 20px;
+  }
+  

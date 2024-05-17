@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Trip } from './interfaces/trip.interface';
-import { ListViewModule } from '@progress/kendo-angular-listview';
 
 @Component({
   selector: 'app-dashboard',

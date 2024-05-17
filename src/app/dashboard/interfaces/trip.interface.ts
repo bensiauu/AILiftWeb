@@ -1,5 +1,6 @@
 export interface Trip {
     date: string;
+    lift_id: string;
     lbb_data: LBBData[];
     lmd_data: LMDData[];
     trip_num: number;
