@@ -1,48 +1,77 @@
-:host {
-    display: block;
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  .dashboard-container {
+.dashboard-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-  }
-  
-  .header {
-    font-size: 1.8em;
-    font-weight: bold;
-    padding: 10px 0;
-    border-bottom: 2px solid #ddd;
-    margin-bottom: 10px;
-    text-align: center;
-  }
-  
-  .trip-list {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
-  }
+    background-color: #f5f5f5;
+    font-family: Arial, sans-serif;
   
-  .charts-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
+    .header {
+      margin-bottom: 20px;
+      h1 {
+        margin: 0;
+      }
+    }
   
-  .chart-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 45%;  /* Smaller width to fit two charts in one row */
-    box-sizing: border-box;
-  }
+    .trip-list {
+      margin-bottom: 20px;
+      
+      kendo-listview {
+        .k-listview-content {
+          border: none;
+          .k-listview-item {
+            border: none; // Remove borders from list items
+            padding: 10px;
+            &:not(:last-child) {
+              border-bottom: 1px solid #e0e0e0; // Add custom border between items if needed
+            }
+          }
+        }
+      }
   
-  .content {
-    margin-bottom: 20px;
-  }
+      .selected-trip {
+        background-color: #e7f3ff; // Light background color for the selected trip
+        font-weight: bold; // Bold text for the selected trip
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Add shadow to the selected trip
+        border-radius: 8px; // Match the border radius of the trip box
+        transition: background-color 0.3s ease, font-weight 0.3s ease;
+        position: relative;
+      }
   
+      .indicator-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px; // Adjust the size of the indicator icon
+        color: #007bff; // Color of the indicator icon
+      }
+    }
+  
+    .charts-section {
+      .charts-row {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+  
+        .chart-card {
+          flex: 1;
+          margin: 10px;
+          background: #ffffff;
+          padding: 15px;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          transition: box-shadow 0.3s ease;
+  
+          &:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+          }
+  
+          .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }

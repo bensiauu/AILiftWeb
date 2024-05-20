@@ -7,7 +7,7 @@ export interface Trip {
 }
 
 export interface LBBData {
-    timestamp: string;
+    timestamp: string | Date;
     x : number;
     y : number;
     z : number;

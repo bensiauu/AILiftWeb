@@ -1,41 +1,92 @@
 <div class="dashboard-container">
-    <div class="charts-row">
-        <div class="chart-card">
-            <section class="content">
-                <kendo-chart style="pointer-events: none;" *ngIf="liftData && liftData.length > 0 && liftData[0].lbb_data" [transitions]="false" [categoryAxis]="categoryAxis">
-                    <kendo-chart-series>
-                        <kendo-chart-series-item [style]="normal" [markers]="{visible: false}" type="line" [data]="liftData[0].lbb_data" field="x" categoryField="timestamp"></kendo-chart-series-item>
-                    </kendo-chart-series>
-                </kendo-chart>
-            </section>
-        </div>
-        <div class="chart-card">
-            <section class="content">
-                <kendo-chart style="pointer-events: none;" *ngIf="liftData && liftData.length > 0 && liftData[0].lbb_data" [transitions]="false" [categoryAxis]="categoryAxis">
-                    <kendo-chart-series>
-                        <kendo-chart-series-item [style]="normal" [markers]="{visible: false}" type="line" [data]="liftData[0].lbb_data" field="y" categoryField="timestamp"></kendo-chart-series-item>
-                    </kendo-chart-series>
-                </kendo-chart>
-            </section>
-        </div>
-        <div class="chart-card">
-            <section class="content">
-                <kendo-chart style="pointer-events: none;" *ngIf="liftData && liftData.length > 0 && liftData[0].lbb_data" [transitions]="false" [categoryAxis]="categoryAxis">
-                    <kendo-chart-series>
-                        <kendo-chart-series-item [style]="normal" [markers]="{visible: false}" type="line" [data]="liftData[0].lbb_data" field="z" categoryField="timestamp"></kendo-chart-series-item>
-                    </kendo-chart-series>
-                </kendo-chart>
-            </section>
-        </div>
+    <div class="header">
+      <h1>Trip Dashboard</h1>
     </div>
+    
     <div class="trip-list">
-        <kendo-listview [data]="liftData" [itemClass]="{ 'item-border': true }">
-            <ng-template kendoListViewHeaderTemplate>
-                <div class="header">Trips</div>
-            </ng-template>
-            <ng-template kendoListViewItemTemplate let-dataItem="dataItem">
-                <app-trip class="trip" [trip]="dataItem"></app-trip>
-            </ng-template>
-        </kendo-listview>
+      <kendo-listview [data]="liftData" [itemClass]="{ 'item-border': true }">
+        <ng-template kendoListViewItemTemplate let-dataItem="dataItem">
+          <div (click)="selectTrip(dataItem)" [ngClass]="{'selected-trip': selectedTrip?.trip_num === dataItem.trip_num}">
+            <app-trip class="trip" [trip]="dataItem"></app-trip>
+            <ng-container *ngIf="selectedTrip?.trip_num === dataItem.trip_num">
+              <span class="indicator-icon">✔️</span>
+            </ng-container>
+          </div>
+        </ng-template>
+      </kendo-listview>
     </div>
-</div>
+  
+    <div class="charts-section">
+      <div class="charts-row">
+        <div class="chart-card">
+          <section class="content">
+            <kendo-chart
+              *ngIf="selectedTrip && aggregatedLBBData"
+              [transitions]="false"
+              [categoryAxis]="categoryAxis"
+              [valueAxis]="valueAxis"
+            >
+              <kendo-chart-title text="X-axis"></kendo-chart-title>
+              <kendo-chart-series>
+                <kendo-chart-series-item
+                  [style]="normal"
+                  type="line"
+                  [data]="aggregatedLBBData"
+                  field="x"
+                  categoryField="timestamp"
+                  markers="false"
+                >
+                </kendo-chart-series-item>
+              </kendo-chart-series>
+            </kendo-chart>
+          </section>
+        </div>
+        <div class="chart-card">
+          <section class="content">
+            <kendo-chart
+              *ngIf="selectedTrip && aggregatedLBBData"
+              [transitions]="false"
+              [categoryAxis]="categoryAxis"
+              [valueAxis]="valueAxis"
+            >
+              <kendo-chart-title text="Y-axis"></kendo-chart-title>
+              <kendo-chart-series>
+                <kendo-chart-series-item
+                  [style]="normal"
+                  type="line"
+                  [data]="aggregatedLBBData"
+                  field="y"
+                  categoryField="timestamp"
+                  markers="false"
+                >
+                </kendo-chart-series-item>
+              </kendo-chart-series>
+            </kendo-chart>
+          </section>
+        </div>
+        <div class="chart-card">
+          <section class="content">
+            <kendo-chart
+              *ngIf="selectedTrip && aggregatedLBBData"
+              [transitions]="false"
+              [categoryAxis]="categoryAxis"
+              [valueAxis]="valueAxis"
+            >
+              <kendo-chart-title text="Z-axis"></kendo-chart-title>
+              <kendo-chart-series>
+                <kendo-chart-series-item
+                  [style]="normal"
+                  type="line"
+                  [data]="aggregatedLBBData"
+                  field="z"
+                  categoryField="timestamp"
+                  markers="false"
+                >
+                </kendo-chart-series-item>
+              </kendo-chart-series>
+            </kendo-chart>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>

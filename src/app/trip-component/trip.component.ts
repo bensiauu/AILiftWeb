@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Trip } from '../dashboard/interfaces/trip.interface';
+import { parseCustomTimestamp } from '../utils/date-utils';
 
 @Component({
   selector: 'app-trip',
@@ -7,24 +8,10 @@ import { Trip } from '../dashboard/interfaces/trip.interface';
   styleUrls: ['./trip.component.scss']
 })
 export class TripComponent {
-    @Input() public trip: Trip = {
-        date: '',
-        lift_id: '',
-        lbb_data: [],
-        lmd_data: [],
-        trip_num: 0
-    };
-    
-    
-    getTimeFromTimestamp(timestamp: string): string {
-        const timestampWithoutMicroseconds = timestamp.split(':')[0] + ':' + timestamp.split(':')[1] + ':' + timestamp.split(':')[2];
-        const date = new Date(timestampWithoutMicroseconds);
-        if (isNaN(date.getTime())) {
-            return 'wrong';
-          }
-        const hours = date.getHours();
-        const minutes = date.getMinutes();
-        const seconds = date.getSeconds();
-        return `${hours}:${minutes}:${seconds}`;
+    @Input() public trip!: Trip;
+
+    getTimeFromTimestamp(timestamp: string | Date): string {
+        const date = parseCustomTimestamp(timestamp);
+        return date.toLocaleTimeString();
       }
 }
