@@ -1,0 +1,85 @@
+<div class="lift-details">
+    <div class="header">
+      <h1>{{ liftName }}</h1>
+      <input type="text" placeholder="Search by Trip No" />
+    </div>
+    <div class="content">
+      <div class="charts">
+        <div class="chart">
+          <kendo-chart>
+            <kendo-chart-title text="Channel X"></kendo-chart-title>
+            <kendo-chart-category-axis>
+              <kendo-chart-category-axis-item [categories]="categories">
+                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
+              </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+            <kendo-chart-series>
+              <kendo-chart-series-item style="pointer-events: none;" [data]="xData" type="line" [markers]="false"></kendo-chart-series-item>
+            </kendo-chart-series>
+          </kendo-chart>
+        </div>
+        <div class="chart">
+          <kendo-chart>
+            <kendo-chart-title text="Channel Y"></kendo-chart-title>
+            <kendo-chart-category-axis>
+              <kendo-chart-category-axis-item [categories]="categories">
+                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
+              </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+            <kendo-chart-series>
+              <kendo-chart-series-item style="pointer-events: none;" [data]="yData" type="line" [markers]="false"></kendo-chart-series-item>
+            </kendo-chart-series>
+          </kendo-chart>
+        </div>
+        <div class="chart">
+          <kendo-chart>
+            <kendo-chart-title text="Channel Z"></kendo-chart-title>
+            <kendo-chart-category-axis>
+              <kendo-chart-category-axis-item [categories]="categories">
+                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
+              </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+            <kendo-chart-series>
+              <kendo-chart-series-item style="pointer-events: none;" [data]="zData" type="line" [markers]="false"></kendo-chart-series-item>
+            </kendo-chart-series>
+          </kendo-chart>
+        </div>
+      </div>
+      <div class="trip-details">
+        <h2>Trip Detail</h2>
+        <p>Trip No: 555</p>
+        <p>Floor: 1 to 5</p>
+        <p>Alarm Status: NORMAL</p>
+        <p>Start Time: 2024-05-20 10:05:00</p>
+        <p>End Time: 2024-05-20 10:05:03</p>
+      </div>
+      <div class="stats">
+        <div class="tabs">
+          <button>Day</button>
+          <button>Week</button>
+          <button>Month</button>
+        </div>
+        <div class="chart">
+          <h2>Total No of Trip: 1000</h2>
+          <!-- Replace with actual chart implementation -->
+          <img src="assets/img/details.png" alt="Trip Stats" />
+        </div>
+      </div>
+      <div class="prediction-history">
+        <h2>Prediction History</h2>
+        <table>
+          <tr>
+            <th>Anomaly Status</th>
+            <th>Time</th>
+            <th>Root Cause</th>
+          </tr>
+          <tr>
+            <td>Abnormal</td>
+            <td>2024-05-20 09:02:05</td>
+            <td>Sensor Failure</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  

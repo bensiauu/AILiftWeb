@@ -1,9 +1,0 @@
-<div class="trip">
-    <kendo-avatar shape="circle" width="40" height="40" icon="user"></kendo-avatar>
-    <div class="trip-info grid-container">
-      <div class="lift-id title">{{ trip.lift_id }}</div>
-      <div class="trip-date">{{ trip.date | date: 'MMM d, y' }}</div>
-      <div class="trip-num">Trip #{{ trip.trip_num }}</div>
-      <div class="trip-time">{{ getTimeFromTimestamp(trip.lbb_data[0].timestamp) }}</div>
-    </div>
-  </div>

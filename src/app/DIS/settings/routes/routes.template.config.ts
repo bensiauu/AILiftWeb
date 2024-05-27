@@ -24,6 +24,8 @@ import { ProfileSettingComponent } from '@dis/components/profile-setting/profile
 
 //AI Lift
 import { DashboardComponent } from '../../../dashboard/dashboard.component';
+import { DashboardV2Component } from 'src/app/dashboard-v2/dashboard-v2.component';
+import { LiftDetailsComponent } from 'src/app/lift-details/lift-details.component';
 export const AppTemplateRoutes: Routes = [
   // Below is how to include a page
   { path: 'login', component: LoginComponent },
@@ -112,6 +114,26 @@ export const AppTemplateRoutes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard], // ONLY acceptable ELEVATION can access after login
+    data: {
+      elevation: [
+
+      ] // List out all roles that are acceptable
+    }
+  },
+  {
+    path: 'dashboard-v2',
+    component: DashboardV2Component,
+    canActivate: [AuthGuard], // ONLY acceptable ELEVATION can access after login
+    data: {
+      elevation: [
+
+      ] // List out all roles that are acceptable
+    }
+  },
+  {
+    path: 'lift-details/:name',
+    component: LiftDetailsComponent,
     canActivate: [AuthGuard], // ONLY acceptable ELEVATION can access after login
     data: {
       elevation: [

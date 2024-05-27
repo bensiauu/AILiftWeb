@@ -74,7 +74,8 @@ import {MockedKeycloakService} from '@dis/services/mocks/mock-authentication';
 import { HorizontalMenuComponent } from './DIS/components/horizontal-menu/horizontal-menu.component';
 import { ProfileSettingComponent } from '@dis/components/profile-setting/profile-setting.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { TripComponent } from './trip-component/trip.component';
+import { DashboardV2Component } from './dashboard-v2/dashboard-v2.component';
+import { LiftDetailsComponent } from './lift-details/lift-details.component';
 
 // Sort
 // @ts-ignore
@@ -101,7 +102,8 @@ import { TripComponent } from './trip-component/trip.component';
     HorizontalMenuComponent,
     ProfileSettingComponent,
     DashboardComponent,
-    TripComponent
+    DashboardV2Component,
+    LiftDetailsComponent
   ],
   imports: [
     JwtModule.forRoot({

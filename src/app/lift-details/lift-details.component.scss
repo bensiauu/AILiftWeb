@@ -1,0 +1,72 @@
+.lift-details {
+    padding: 20px;
+  
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+  
+      h1 {
+        margin: 0;
+      }
+  
+      input {
+        padding: 5px;
+        font-size: 16px;
+      }
+    }
+  
+    .content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+  
+      .charts, .trip-details, .stats, .prediction-history {
+        flex: 1;
+        min-width: 300px;
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+  
+      .charts {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+  
+      .chart kendo-chart {
+        height: 300px;
+      }
+  
+      .tabs {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 10px;
+  
+        button {
+          padding: 5px 10px;
+          font-size: 16px;
+          cursor: pointer;
+        }
+      }
+  
+      .prediction-history table {
+        width: 100%;
+        border-collapse: collapse;
+  
+        th, td {
+          border: 1px solid #ddd;
+          padding: 8px;
+          text-align: left;
+        }
+  
+        th {
+          background-color: #f2f2f2;
+        }
+      }
+    }
+  }
+  
