@@ -25,27 +25,24 @@
           <h3>{{ lift.name }}</h3>
           <div class="lift-icon" [ngClass]="lift.direction">
             <img src="assets/img/lift_icon.png" alt="Lift Icon">
-            <div class="arrow-up" *ngIf="lift.direction === 'up'"></div>
-            <div class="arrow-down" *ngIf="lift.direction === 'down'"></div>
           </div>
           <p>Confidence Level: {{ lift.confidence }}</p>
         </div>
       </div>
-      <div class="details sticky-details">
+      <div class="details">
         <div class="details-header">Lift Details</div>
-        <table *ngIf="hoveredLift">
-          <tr>
-            <th>Lift Name</th>
-            <th>Predicted Condition</th>
-          </tr>
-          <tr>
-            <td>{{ hoveredLift.name }}</td>
-            <td>{{ hoveredLift.condition }} <span class="dot" [ngClass]="hoveredLift.status"></span></td>
-          </tr>
-        </table>
-        <p *ngIf="hoveredLift">Current Time<br>{{ currentTime }}</p>
-        <p *ngIf="hoveredLift">Prediction Period<br>{{ hoveredLift.predictionTime }}</p>
+	<div class="chart-container">
+        <kendo-chart>
+          <kendo-chart-title text="Overall Fault Status"></kendo-chart-title>
+          <kendo-chart-legend position="top"></kendo-chart-legend>
+          <kendo-chart-category-axis>
+            <kendo-chart-category-axis-item [categories]="categories"></kendo-chart-category-axis-item>
+          </kendo-chart-category-axis>
+          <kendo-chart-series>
+            <kendo-chart-series-item *ngFor="let item of series" [data]="item.data" [name]="item.name" type="column"></kendo-chart-series-item>
+          </kendo-chart-series>
+        </kendo-chart>
       </div>
-    </div>
+      </div>
   </div>
   

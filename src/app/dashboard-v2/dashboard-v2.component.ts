@@ -20,7 +20,15 @@ export class DashboardV2Component {
       { name: 'S0160L03A', condition: 'Normal', confidence: '50%', status: 'normal', direction: 'up', predictionTime: '' },
       { name: 'S0160L05A', condition: 'Maintenance', confidence: '10%', status: 'maintenance', direction: 'down', predictionTime: '' }
     ];
-  
+	categories = ['S0160L04A', 'S0160L01A', 'S0160L05A', 'S0160L03A'];
+
+  series = [
+    { name: 'Healthy', data: [80, 90, 85, 75] },
+    { name: 'Fault1', data: [20, 10, 15, 25] },
+    { name: 'Fault2', data: [30, 20, 10, 15] },
+    { name: 'Fault3', data: [10, 25, 30, 20] },
+    { name: 'Others', data: [5, 5, 5, 10] }
+  ];  
     ngOnInit() {
       const now = new Date().toISOString();
       this.currentTime = now;
