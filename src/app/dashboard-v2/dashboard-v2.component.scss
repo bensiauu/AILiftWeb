@@ -14,6 +14,7 @@ $secondary-font-color: #666;
 $highlight-color: #ffda79;
 $primary-font-family: 'Helvetica, Arial, sans-serif';
 
+
 body {
   font-family: $primary-font-family;
   margin: 0;
@@ -98,6 +99,8 @@ body {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 10px;
+  background-color: #eef2f3;
+  padding: 10px;
 
     .lift-card {
       background-color: $header-background-color;
@@ -170,14 +173,10 @@ body {
 
 
   .details {
-  overflow-y: auto;
   max-height: 100%;
   background-color: #eef2f3;
   padding: 10px;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 
        .details-header {
 	font-size: 1.2em;
@@ -185,4 +184,7 @@ body {
   	padding-bottom: 10px;
        }   
     }  
+  .chart-container {
+	  margin-top: 20px;
+  }
 }

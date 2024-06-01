@@ -1,4 +1,4 @@
-.lift-details {
+.lift-detailsv1 {
     padding: 20px;
   
     .header {
@@ -70,3 +70,28 @@
     }
   }
   
+
+
+  .lift-details {
+	  height: 100vh;
+	  display: grid;
+	  grid-template-rows: 15% 15% 70%;
+
+	  .trip-select {
+		  background-color: blue;
+	  }
+	  .trip-details {
+		  background-color: red;
+	  }
+	  .details-container {
+		  display: grid;
+		  grid-template-columns: 1fr 1fr;
+		  .line-chart-container {
+			  background-color: yellow;
+		  }
+		  .stats-container {
+			  background-color: grey;
+		  }
+	  }
+	  
+  }
