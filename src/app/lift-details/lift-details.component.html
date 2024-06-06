@@ -89,7 +89,47 @@
 	  </div>
 	  <div class="trip-details"></div>
 	  <div class="details-container">
-		  <div class="line-chart-container"></div>
+		  <div class="line-chart-container">
+			  <div>  
+		 	<kendo-chart>
+            <kendo-chart-title text="Channel Z"></kendo-chart-title>
+            <kendo-chart-category-axis>
+              <kendo-chart-category-axis-item [categories]="categories">
+                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
+              </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+            <kendo-chart-series>
+              <kendo-chart-series-item style="pointer-events: none;" [data]="zData" type="line" [markers]="false"></kendo-chart-series-item>
+            </kendo-chart-series>
+          </kendo-chart>
+			  </div> 
+			  <div>
+				  <kendo-chart>
+            <kendo-chart-title text="Channel Y"></kendo-chart-title>
+            <kendo-chart-category-axis>
+              <kendo-chart-category-axis-item [categories]="categories">
+                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
+              </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+            <kendo-chart-series>
+              <kendo-chart-series-item style="pointer-events: none;" [data]="yData" type="line" [markers]="false"></kendo-chart-series-item>
+            </kendo-chart-series>
+          </kendo-chart>
+			  </div>
+			  <div>
+				<kendo-chart>
+            <kendo-chart-title text="Channel X"></kendo-chart-title>
+            <kendo-chart-category-axis>
+              <kendo-chart-category-axis-item [categories]="categories">
+                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
+              </kendo-chart-category-axis-item>
+            </kendo-chart-category-axis>
+            <kendo-chart-series>
+              <kendo-chart-series-item style="pointer-events: none;" [data]="xData" type="line" [markers]="false"></kendo-chart-series-item>
+            </kendo-chart-series>
+          </kendo-chart>
+			  </div>
+		  </div>
 		  <div class="stats-container">
 			  <div class="day-week-month-buttons"></div>
 		  </div>

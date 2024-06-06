@@ -1,48 +1,74 @@
-<div class="dashboard">
-    <h2>DASHBOARD</h2>
-    <div class="status-legend">
-      <div class="status normal">
-        <span class="dot"></span> Normal
-      </div>
-      <div class="status faulty">
-        <span class="dot"></span> Faulty
-      </div>
-      <div class="status maintenance">
-        <span class="dot"></span> Maintenance
-      </div>
-      <div class="status offline">
-        <span class="dot"></span> Offline
-      </div>
-    </div>
-    <div class="main-content">
-      <div class="lift-container">
-        <div class="lift-card" 
-             *ngFor="let lift of lifts" 
-             [ngClass]="lift.status"
-             (mouseenter)="onHoverLift(lift)" 
-             (mouseleave)="onLeaveLift()"
-             (click)="navigateToLiftDetails(lift.name)">
-          <h3>{{ lift.name }}</h3>
-          <div class="lift-icon" [ngClass]="lift.direction">
-            <img src="assets/img/lift_icon.png" alt="Lift Icon">
-          </div>
-          <p>Confidence Level: {{ lift.confidence }}</p>
-        </div>
-      </div>
-      <div class="details">
-        <div class="details-header">Lift Details</div>
-	<div class="chart-container">
-        <kendo-chart>
-          <kendo-chart-title text="Overall Fault Status"></kendo-chart-title>
-          <kendo-chart-legend position="top"></kendo-chart-legend>
-          <kendo-chart-category-axis>
-            <kendo-chart-category-axis-item [categories]="categories"></kendo-chart-category-axis-item>
-          </kendo-chart-category-axis>
-          <kendo-chart-series>
-            <kendo-chart-series-item *ngFor="let item of series" [data]="item.data" [name]="item.name" type="column"></kendo-chart-series-item>
-          </kendo-chart-series>
-        </kendo-chart>
-      </div>
-      </div>
-  </div>
-  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lift Health Dashboard</title>
+    <link rel="stylesheet" href="dashboard-v2.component.scss">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="dashboard">
+        <h2>Dashboard</h2>
+        <section class="lift-container">
+            <div class="lift-card" *ngFor="let lift of lifts" [ngClass]="{'selected': isSelected(lift), 'normal': lift.status === 'normal', 'faulty': lift.status === 'faulty', 'maintenance': lift.status === 'maintenance', 'offline': lift.status === 'offline'}"
+            (click)="selectLift(lift)">
+                <h3>{{lift.name}}</h3>
+                <img class="lift-icon" src="../../assets/img/lift_icon.png" alt="Lift Icon">
+                <div class="status-indicator" [ngClass]="lift.status"></div>
+            </div>
+        </section>
+        <section class="title-line">
+            <h3>24 Hour Statistics</h3>
+            <div class="status-legend">
+                <div class="status normal">
+                    <span class="dot"></span> Normal
+                </div>
+                <div class="status faulty">
+                    <span class="dot"></span> Faulty
+                </div>
+                <div class="status maintenance">
+                    <span class="dot"></span> Maintenance
+                </div>
+                <div class="status offline">
+                    <span class="dot"></span> Offline
+                </div>
+            </div>
+        </section>
+        <section class="stats-container">
+            <div class="pie-chart-container">
+                <kendo-chart [title]="selectedLift.name + ' Status'">
+                    <kendo-chart-legend position="bottom"></kendo-chart-legend>
+                    <kendo-chart-series>
+                        <kendo-chart-series-item
+                            colorField="valueColor"
+                            [autoFit]="true"
+                            type="pie"
+                            [data]="pieData"
+                            field="value"
+                            categoryField="category"
+                            [labels]="{ visible: true }">
+                        </kendo-chart-series-item>
+                    </kendo-chart-series>
+                </kendo-chart>
+            </div>
+            <div class="faults">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Latest Faults</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let fault of faults">
+                            <td>{{ fault.name }}</td>
+                            <td>{{ fault.date }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
