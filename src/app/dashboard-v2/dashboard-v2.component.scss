@@ -10,7 +10,7 @@ body {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     overflow:auto;
 }
 
@@ -68,7 +68,9 @@ h2 {
     border-top: 2px solid #007bff;
     border-right: 2px solid #007bff;
     border-bottom: 2px solid #007bff;
-    border-left-width: 10px; /* Keep left border width consistent */
+    border-left-width: 10px; 
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
   
   .lift-card h3 {
