@@ -29,6 +29,10 @@ export class DashboardV2Component {
     public faults = [
         { name: 'Fault 1', date: '2024-02-29 10:33am' },
         { name: 'Fault 2', date: '2024-03-01 02:15pm' },
+        { name: '', date: '' },
+        { name: '', date: '' },
+        { name: '', date: '' },
+        
         // Add more faults as needed
       ];  
 

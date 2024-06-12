@@ -9,13 +9,17 @@
 </head>
 <body>
     <main class="dashboard">
-        <h2>Dashboard</h2>
         <section class="lift-container">
-            <div class="lift-card" *ngFor="let lift of lifts" [ngClass]="{'selected': isSelected(lift), 'normal': lift.status === 'normal', 'faulty': lift.status === 'faulty', 'maintenance': lift.status === 'maintenance', 'offline': lift.status === 'offline'}"
+            <div class="lift-card" *ngFor="let lift of lifts" [ngClass]="{
+                'selected': isSelected(lift), 
+                'normal': lift.status === 'normal', 
+                'faulty': lift.status === 'faulty', 
+                'maintenance': lift.status === 'maintenance', 
+                'offline': lift.status === 'offline'
+              }" 
             (click)="selectLift(lift)">
                 <h3>{{lift.name}}</h3>
-                <img class="lift-icon" src="../../assets/img/lift_icon.png" alt="Lift Icon">
-                <div class="status-indicator" [ngClass]="lift.status"></div>
+                <img class="lift-icon" src="../../assets/img/downloaded_lift_icon.png" alt="Lift Icon">
             </div>
         </section>
         <section class="title-line">
@@ -37,8 +41,9 @@
         </section>
         <section class="stats-container">
             <div class="pie-chart-container">
-                <kendo-chart [title]="selectedLift.name + ' Status'">
-                    <kendo-chart-legend position="bottom"></kendo-chart-legend>
+                <kendo-chart>
+                    <kendo-chart-title [text]="selectedLift.name + ' Status'"></kendo-chart-title>
+                    <kendo-chart-legend position="left"></kendo-chart-legend>
                     <kendo-chart-series>
                         <kendo-chart-series-item
                             colorField="valueColor"
