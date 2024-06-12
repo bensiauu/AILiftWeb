@@ -33,7 +33,7 @@ export class DashboardV2Component {
         { name: '', date: '' },
         { name: '', date: '' },
         
-        // Add more faults as needed
+        
       ];  
 
 
