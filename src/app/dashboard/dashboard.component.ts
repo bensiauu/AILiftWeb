@@ -66,7 +66,7 @@ export class DashboardComponent {
         this.aggregatedLBBData = this.aggregateData(trip.lbb_data);
     }
 
-    aggregateData(data: LBBData[], interval: number = 300): LBBData[] {
+    aggregateData(data: LBBData[], interval: number = 200): LBBData[] {
         const aggregated: LBBData[] = [];
         let sumX = 0, sumY = 0, sumZ = 0, count = 0;
         let currentIntervalStart = parseCustomTimestamp(data[0].timestamp).getTime();
