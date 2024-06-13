@@ -2,19 +2,6 @@
     <div class="header">
       <h1>Trip Dashboard</h1>
     </div>
-    
-    <div class="trip-list">
-      <kendo-listview [data]="liftData" [itemClass]="{ 'item-border': true }">
-        <ng-template kendoListViewItemTemplate let-dataItem="dataItem">
-          <div (click)="selectTrip(dataItem)" [ngClass]="{'selected-trip': selectedTrip?.trip_num === dataItem.trip_num}">
-            <app-trip class="trip" [trip]="dataItem"></app-trip>
-            <ng-container *ngIf="selectedTrip?.trip_num === dataItem.trip_num">
-              <span class="indicator-icon">✔️</span>
-            </ng-container>
-          </div>
-        </ng-template>
-      </kendo-listview>
-    </div>
   
     <div class="charts-section">
       <div class="charts-row">
