@@ -1,66 +1,83 @@
-  .lift-details {
-	  height: 90vh;
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+.lift-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 85vh; 
 
-	  .col1 {
-        background-color: aquamarine;
+    header {
         display: flex;
-        flex-direction: column;
         justify-content: space-between;
-        max-height: 85%;
-
-        .k-label {
-            margin-right :10px;
-        }
-        kendo-datetimepicker {
-            width: 200px;
-            height: 30px;
-        
-            .k-input {
-              height: 30px; 
-              font-size: 12px;
-            }
-        
-            .k-select {
-              height: 30px;
-            }
-            
-          }
+        align-items: center;
+        flex: 0 0 10%;
 
         .date-picker {
-            background-color: cadetblue;
-            flex-direction: column;
-            justify-content: space-between;
             display: flex;
+            gap: 1rem;
+
+            kendo-datetimepicker {
+                width: 250px; 
+                height: 30px; 
+
+                .k-input {
+                    height: 20px; 
+                    font-size: 12px; 
+                }
+
+                .k-select {
+                    height: 30px; 
+                }
+            }
+        }
+    }
+
+    .middle {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        gap: 1rem;
+        flex: 0 0 60%;
+
+        .trip-details,
+        .charts-container {
+            flex: 1;
+            min-width: 0; // Allows elements to shrink properly
+            overflow: auto;
+        }
+
+        .trip-details {
+            display: flex;
+            flex-direction: column;
             gap: 1rem;
         }
 
-        .bar-chart-container {
-            background-color: burlywood;
-        }
-      }
-	  .trip-details {
-          max-height: 85%;
+        .charts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow: hidden;
+            justify-content: flex-start;
 
-          ::ng-deep .k-grid-header {
-            background-color: #007bff; // Set your desired header color
-            color: white;
-          }
-          
-          ::ng-deep .k-grid-header .k-header {
-            font-weight: bold;
-          }
-          
-          ::ng-deep .k-grid td {
-            height: 40px; // Set your desired row height
-            line-height: 40px;
-          }
-	  }
-	  .charts-container {
-        background-color: blueviolet;
-        max-height: 85%;
+            >div {
+                flex: 1;
+            }
+        }
+    }
+
+    .bar-chart-container {
+        flex: 0 0 30%;
+    }
+
+    .bar-chart-container kendo-chart {
+        height: 80%;
       }
-	  
-  }
+}
+
+
+::ng-deep .k-grid-header .k-header {
+    font-weight: bold;
+}
+
+::ng-deep .k-grid td {
+    height: 20px; 
+    line-height: 40px;
+}
