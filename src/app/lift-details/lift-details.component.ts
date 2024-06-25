@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { parseAndFormatCustomTimestamp, parseCustomTimestamp } from '../utils/date-utils';
+import { parseAndFormatCustomTimestamp } from '../utils/date-utils';
 
 @Component({
   selector: 'app-lift-details',
@@ -14,6 +14,23 @@ export class LiftDetailsComponent implements OnInit {
   yData: any[] = [];
   zData: any[] = [];
   categories: any[] = [];
+
+  fromDateTime: Date = new Date();
+  toDateTime: Date = new Date();
+  minDateTime: Date = new Date(2000, 0, 1);
+  maxDateTime: Date = new Date(2100, 11, 31, 23, 59);
+
+  public faults = [
+      { TripNumber: 100, date: '2024-02-29 10:33am', pStatus:'Fault 1',floorsTravelled: 10},
+      { TripNumber: 101, date: '2024-02-29 10:35am', pStatus:'Fault 1',floorsTravelled: 10},
+      { TripNumber: 102, date: '2024-02-29 10:36am', pStatus:'Fault 1',floorsTravelled: 10},
+      { TripNumber: 103, date: '2024-02-29 10:37pm', pStatus:'No Fault',floorsTravelled: 2 },
+    { name: '', date: '' },
+    { name: '', date: '' },
+    { name: '', date: '' },
+    
+    
+  ];  
 
   sampleData = {
     "lbb_data": [

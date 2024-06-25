@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ValueAxisLabels } from '@progress/kendo-angular-charts';
 
 @Component({
   selector: 'app-dashboard-v2',
@@ -55,4 +54,7 @@ export class DashboardV2Component {
     return this.selectedLift === lift;
   }
 
+  navigateToLiftDetails(liftName: string) {
+    this.router.navigate(['/lift-details', liftName]);
+  }
 }

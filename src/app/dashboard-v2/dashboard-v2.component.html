@@ -10,14 +10,13 @@
 <body>
     <main class="dashboard">
         <section class="lift-container">
-            <div class="lift-card" *ngFor="let lift of lifts" [ngClass]="{
-                'selected': isSelected(lift), 
+            <div class="lift-card"  *ngFor="let lift of lifts" [ngClass]="{
                 'normal': lift.status === 'normal', 
                 'faulty': lift.status === 'faulty', 
                 'maintenance': lift.status === 'maintenance', 
                 'offline': lift.status === 'offline'
               }" 
-            (click)="selectLift(lift)">
+            (click)="navigateToLiftDetails(lift.name)">
                 <h3>{{lift.name}}</h3>
                 <img class="lift-icon" src="../../assets/img/downloaded_lift_icon.png" alt="Lift Icon">
             </div>
@@ -42,20 +41,31 @@
         <section class="stats-container">
             <div class="pie-chart-container">
                 <kendo-chart>
-                    <kendo-chart-title [text]="selectedLift.name + ' Status'"></kendo-chart-title>
-                    <kendo-chart-legend position="left"></kendo-chart-legend>
+                    <kendo-chart-title text="Lift Status"></kendo-chart-title>
+               
+                    <!-- Define the Category Axis -->
+                    <kendo-chart-category-axis>
+                      <kendo-chart-category-axis-item [categories]="['S0160L01A', 'S0160L04A', 'S0160L05A', 'S0160L03A']">
+                      <kendo-chart-category-axis-item-labels [rotation]="45"></kendo-chart-category-axis-item-labels>
+                      </kendo-chart-category-axis-item>
+                    </kendo-chart-category-axis>
+               
+                    <!-- Define a Single Value Axis -->
+                    <kendo-chart-value-axis>
+                      <kendo-chart-value-axis-item name="singleAxis">
+                      </kendo-chart-value-axis-item>
+                    </kendo-chart-value-axis>
+               
+                    <!-- Define the Series and Assign to the Single Value Axis -->
                     <kendo-chart-series>
-                        <kendo-chart-series-item
-                            colorField="valueColor"
-                            [autoFit]="true"
-                            type="pie"
-                            [data]="pieData"
-                            field="value"
-                            categoryField="category"
-                            [labels]="{ visible: true }">
-                        </kendo-chart-series-item>
+                      <kendo-chart-series-item type="column" [stack]="true" name="Normal" [data]="[100, 123, 234, 343]" axis="singleAxis" color="#00A307">
+                      </kendo-chart-series-item>
+                      <kendo-chart-series-item type="column" [stack]="true" name="Sev 2 Fault" [data]="[120, 67, 231, 196]" axis="singleAxis" color="#FD9800">
+                      </kendo-chart-series-item>
+                      <kendo-chart-series-item type="column" [stack]="true" name="Sev 1 Fault" [data]="[45, 124, 189, 143]" axis="singleAxis" color="#E70E00">
+                      </kendo-chart-series-item>
                     </kendo-chart-series>
-                </kendo-chart>
+                  </kendo-chart>
             </div>
             <div class="faults">
                 <table>

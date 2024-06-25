@@ -1,138 +1,61 @@
-<!--<div class="lift-details">
-    <div class="header">
-      <h1>{{ liftName }}</h1>
-      <input type="text" placeholder="Search by Trip No" />
-    </div>
-    <div class="content">
-      <div class="charts">
-        <div class="chart">
-          <kendo-chart>
-            <kendo-chart-title text="Channel X"></kendo-chart-title>
-            <kendo-chart-category-axis>
-              <kendo-chart-category-axis-item [categories]="categories">
-                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
-              </kendo-chart-category-axis-item>
-            </kendo-chart-category-axis>
-            <kendo-chart-series>
-              <kendo-chart-series-item style="pointer-events: none;" [data]="xData" type="line" [markers]="false"></kendo-chart-series-item>
-            </kendo-chart-series>
-          </kendo-chart>
-        </div>
-        <div class="chart">
-          <kendo-chart>
-            <kendo-chart-title text="Channel Y"></kendo-chart-title>
-            <kendo-chart-category-axis>
-              <kendo-chart-category-axis-item [categories]="categories">
-                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
-              </kendo-chart-category-axis-item>
-            </kendo-chart-category-axis>
-            <kendo-chart-series>
-              <kendo-chart-series-item style="pointer-events: none;" [data]="yData" type="line" [markers]="false"></kendo-chart-series-item>
-            </kendo-chart-series>
-          </kendo-chart>
-        </div>
-        <div class="chart">
-          <kendo-chart>
-            <kendo-chart-title text="Channel Z"></kendo-chart-title>
-            <kendo-chart-category-axis>
-              <kendo-chart-category-axis-item [categories]="categories">
-                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
-              </kendo-chart-category-axis-item>
-            </kendo-chart-category-axis>
-            <kendo-chart-series>
-              <kendo-chart-series-item style="pointer-events: none;" [data]="zData" type="line" [markers]="false"></kendo-chart-series-item>
-            </kendo-chart-series>
-          </kendo-chart>
-        </div>
-      </div>
-      <div class="trip-details">
-        <h2>Trip Detail</h2>
-        <p>Trip No: 555</p>
-        <p>Floor: 1 to 5</p>
-        <p>Alarm Status: NORMAL</p>
-        <p>Start Time: 2024-05-20 10:05:00</p>
-        <p>End Time: 2024-05-20 10:05:03</p>
-      </div>
-      <div class="stats">
-        <div class="tabs">
-          <button>Day</button>
-          <button>Week</button>
-          <button>Month</button>
-        </div>
-        <div class="chart">
-          <h2>Total No of Trip: 1000</h2>
-          <img src="assets/img/details.png" alt="Trip Stats" />
-        </div>
-      </div>
-      <div class="prediction-history">
-        <h2>Prediction History</h2>
-        <table>
-          <tr>
-            <th>Anomaly Status</th>
-            <th>Time</th>
-            <th>Root Cause</th>
-          </tr>
-          <tr>
-            <td>Abnormal</td>
-            <td>2024-05-20 09:02:05</td>
-            <td>Sensor Failure</td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </div>
-  -->  
+  <h1> {{liftName}}</h1> 
   <div class="lift-details">
 	  
-	  <div class="trip-select">
-		 <h1> {{liftName}}</h1> 
-	  </div>
-	  <div class="trip-details"></div>
-	  <div class="details-container">
-		  <div class="line-chart-container">
-			  <div>  
-		 	<kendo-chart>
-            <kendo-chart-title text="Channel Z"></kendo-chart-title>
-            <kendo-chart-category-axis>
-              <kendo-chart-category-axis-item [categories]="categories">
-                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
-              </kendo-chart-category-axis-item>
-            </kendo-chart-category-axis>
-            <kendo-chart-series>
-              <kendo-chart-series-item style="pointer-events: none;" [data]="zData" type="line" [markers]="false"></kendo-chart-series-item>
-            </kendo-chart-series>
-          </kendo-chart>
-			  </div> 
-			  <div>
-				  <kendo-chart>
-            <kendo-chart-title text="Channel Y"></kendo-chart-title>
-            <kendo-chart-category-axis>
-              <kendo-chart-category-axis-item [categories]="categories">
-                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
-              </kendo-chart-category-axis-item>
-            </kendo-chart-category-axis>
-            <kendo-chart-series>
-              <kendo-chart-series-item style="pointer-events: none;" [data]="yData" type="line" [markers]="false"></kendo-chart-series-item>
-            </kendo-chart-series>
-          </kendo-chart>
-			  </div>
-			  <div>
-				<kendo-chart>
-            <kendo-chart-title text="Channel X"></kendo-chart-title>
-            <kendo-chart-category-axis>
-              <kendo-chart-category-axis-item [categories]="categories">
-                <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700" position="end"></kendo-chart-category-axis-item-labels>
-              </kendo-chart-category-axis-item>
-            </kendo-chart-category-axis>
-            <kendo-chart-series>
-              <kendo-chart-series-item style="pointer-events: none;" [data]="xData" type="line" [markers]="false"></kendo-chart-series-item>
-            </kendo-chart-series>
-          </kendo-chart>
-			  </div>
-		  </div>
-		  <div class="stats-container">
-			  <div class="day-week-month-buttons"></div>
-		  </div>
+	  <div class="col1"> 
+        <div class="date-picker">
+            <div>
+                <label for="fromDateTime">From:</label>
+                <kendo-datetimepicker
+                  [(ngModel)]="fromDateTime"
+                  [format]="'MM/dd/yyyy HH:mm'"
+                  [min]="minDateTime"
+                  [max]="maxDateTime"
+                  id="fromDateTime"
+                >
+                </kendo-datetimepicker>
+              </div>
+              <div>
+                <label for="toDateTime">To:</label>
+                <kendo-datetimepicker
+                  [(ngModel)]="toDateTime"
+                  [format]="'MM/dd/yyyy HH:mm'"
+                  [min]="fromDateTime"
+                  [max]="maxDateTime"
+                  id="toDateTime"
+                >
+                </kendo-datetimepicker>
+              </div>
+  
+        </div>
+        <div class="bar-chart-container">
+            <kendo-chart>
+                <kendo-chart-title text="Predicted Fault History"></kendo-chart-title>
+                <kendo-chart-category-axis>
+                    <kendo-chart-category-axis-item [categories]="['Fault 1', 'Fault 2', 'Fault 3', 'Fault 4']">
+                    </kendo-chart-category-axis-item>
+                  </kendo-chart-category-axis>
+                <kendo-chart-series>
+                    <kendo-chart-x-axis-item name="Fault1"></kendo-chart-x-axis-item>
+
+                    <kendo-chart-series-item type="column" labels="Fault 1" [data]="[1, 2, 3, 5]" color="#5687F2">
+                    </kendo-chart-series-item>
+                    
+                  </kendo-chart-series>
+            </kendo-chart>
+        </div>
+      </div>
+	  <div class="trip-details">
+        <h2>Trips History</h2>
+<kendo-grid [data]="faults">
+  <kendo-grid-column field="TripNumber" title="Trip Number"></kendo-grid-column>
+  <kendo-grid-column field="date" title="Fault Date"></kendo-grid-column>
+  <kendo-grid-column field="floorsTravelled" title="Floors Travelled"></kendo-grid-column>
+  <kendo-grid-column field="pStatus" title="Predicted Status"></kendo-grid-column>
+  <kendo-grid-column field="additional3" title="Additional 3"></kendo-grid-column>
+</kendo-grid>
+      </div>
+	  <div class="charts-container">
+        <h3> accelerometer graphs</h3> 
 	  </div>
 	  
   </div>

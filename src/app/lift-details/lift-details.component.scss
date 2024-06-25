@@ -1,101 +1,66 @@
-.lift-detailsv1 {
-    padding: 20px;
-  
-    .header {
+  .lift-details {
+	  height: 90vh;
       display: flex;
-      align-items: center;
+      flex-direction: row;
       justify-content: space-between;
-      margin-bottom: 20px;
-  
-      h1 {
-        margin: 0;
-      }
-  
-      input {
-        padding: 5px;
-        font-size: 16px;
-      }
-    }
-  
-    .content {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-  
-      .charts, .trip-details, .stats, .prediction-history {
-        flex: 1;
-        min-width: 300px;
-        background-color: #f4f4f4;
-        padding: 10px;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
-  
-      .charts {
+
+	  .col1 {
+        background-color: aquamarine;
         display: flex;
         flex-direction: column;
-        gap: 20px;
-      }
-  
-      .chart kendo-chart {
-        height: 300px;
-      }
-  
-      .tabs {
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 10px;
-  
-        button {
-          padding: 5px 10px;
-          font-size: 16px;
-          cursor: pointer;
+        justify-content: space-between;
+        max-height: 85%;
+
+        .k-label {
+            margin-right :10px;
+        }
+        kendo-datetimepicker {
+            width: 200px;
+            height: 30px;
+        
+            .k-input {
+              height: 30px; 
+              font-size: 12px;
+            }
+        
+            .k-select {
+              height: 30px;
+            }
+            
+          }
+
+        .date-picker {
+            background-color: cadetblue;
+            flex-direction: column;
+            justify-content: space-between;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .bar-chart-container {
+            background-color: burlywood;
         }
       }
-  
-      .prediction-history table {
-        width: 100%;
-        border-collapse: collapse;
-  
-        th, td {
-          border: 1px solid #ddd;
-          padding: 8px;
-          text-align: left;
-        }
-  
-        th {
-          background-color: #f2f2f2;
-        }
-      }
-    }
-  }
-  
-
-
-  .lift-details {
-	  height: 100vh;
-	  display: grid;
-	  grid-template-rows: 15% 15% 70%;
-
-	  .trip-select {
-		  background-color: blue;
-	  }
 	  .trip-details {
-		  background-color: red;
+          max-height: 85%;
+
+          ::ng-deep .k-grid-header {
+            background-color: #007bff; // Set your desired header color
+            color: white;
+          }
+          
+          ::ng-deep .k-grid-header .k-header {
+            font-weight: bold;
+          }
+          
+          ::ng-deep .k-grid td {
+            height: 40px; // Set your desired row height
+            line-height: 40px;
+          }
 	  }
-	  .details-container {
-		  max-height: 80%;
-		  display: grid;
-		  grid-template-columns: 1fr 1fr;
-		  .line-chart-container {
-			  max-height: 50%;
-			  display: flex;
-			  flex-direction: column;
-			  background-color: yellow;
-		  }
-		  .stats-container {
-			  background-color: grey;
-		  }
-	  }
+	  .charts-container {
+        background-color: blueviolet;
+        max-height: 85%;
+      }
 	  
   }
