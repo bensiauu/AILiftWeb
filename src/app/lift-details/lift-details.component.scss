@@ -1,30 +1,59 @@
+$lift-primary-color: #4A90E2;
+$lift-secondary-color: #F5F5F5;
+$lift-font-color: #333;
+$lift-border-color: #E0E0E0;
+$lift-header-bg: #F5F5F5;
+$lift-middle-bg: #FFFFFF;
+$lift-row1-bg: #FAFAFA;
+
+body {
+    font-family: 'Arial', sans-serif;
+    color: $lift-font-color;
+    background-color: #F0F2F5;
+    margin: 0;
+    padding: 0;
+}
+
 .lift-details {
     display: flex;
     flex-direction: column;
-    gap: 5px;
-    height: 85vh; 
+    height: 90vh;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: $lift-middle-bg;
 
     header {
         display: flex;
         justify-content: space-between;
         align-items: center;
         flex: 0 0 10%;
+        background-color: $lift-header-bg;
+        padding: 0.5rem 1rem;
+        border-bottom: 1px solid $lift-border-color;
+        border-radius: 8px 8px 0 0;
+
+        h1 {
+            font-size: 1.5rem;
+            color: $lift-primary-color;
+            margin: 0;
+        }
 
         .date-picker {
             display: flex;
             gap: 1rem;
 
             kendo-datetimepicker {
-                width: 250px; 
-                height: 30px; 
+                width: 200px;
+                height: 30px;
 
                 .k-input {
-                    height: 20px; 
-                    font-size: 12px; 
+                    height: 30px;
+                    font-size: 12px;
                 }
 
                 .k-select {
-                    height: 30px; 
+                    height: 30px;
                 }
             }
         }
@@ -32,52 +61,99 @@
 
     .middle {
         display: flex;
-        justify-content: space-between;
-        align-items: stretch;
+        flex: 1 1 auto;
         gap: 1rem;
-        flex: 0 0 60%;
+        padding: 1rem 0;
+        overflow: hidden; // Ensure content does not overflow
 
-        .trip-details,
+        .trip-details{
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            background-color: $lift-middle-bg;
+            border: 1px solid $lift-border-color;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
         .charts-container {
             flex: 1;
-            min-width: 0; // Allows elements to shrink properly
+            min-width: 0;
             overflow: auto;
+            background-color: $lift-middle-bg;
+            border: 1px solid $lift-border-color;
+            border-radius: 8px;
+            padding: 1rem;
         }
 
         .trip-details {
             display: flex;
             flex-direction: column;
             gap: 1rem;
+
+            h2 {
+                font-size: 1.2rem;
+                color: $lift-primary-color;
+                margin-bottom: 1rem;
+            }
+
+            kendo-grid {
+                border: none;
+
+                ::ng-deep .k-grid-header {
+                    background-color: $lift-secondary-color;
+                    color: $lift-primary-color;
+
+                    .k-header {
+                        font-weight: bold;
+                    }
+                }
+
+                ::ng-deep .k-grid td {
+                    height: 40px;
+                    line-height: 40px;
+                }
+            }
         }
 
         .charts-container {
             display: flex;
             flex-direction: column;
             gap: 1rem;
-            overflow: hidden;
-            justify-content: flex-start;
 
             >div {
                 flex: 1;
+                height: 100%;
+
+                kendo-chart {
+                    height: 100%;
+                }
             }
         }
     }
 
-    .bar-chart-container {
-        flex: 0 0 30%;
+    .row1 {
+        display: flex;
+        flex-direction: column;
+        flex: 0 0 20%;
+        gap: 1rem;
+        background-color: $lift-row1-bg;
+        padding: 1rem;
+        border-radius: 0 0 8px 8px;
+        border-top: 1px solid $lift-border-color;
+
+        .bar-chart-container {
+            height: 100%;
+            overflow: hidden;
+
+            kendo-chart {
+                height: 100%;
+                width: 100%; 
+            }
+        }
     }
-
-    .bar-chart-container kendo-chart {
-        height: 80%;
-      }
 }
 
-
-::ng-deep .k-grid-header .k-header {
-    font-weight: bold;
-}
-
-::ng-deep .k-grid td {
-    height: 20px; 
-    line-height: 40px;
+h2 {
+    margin-top: 20px;
 }
