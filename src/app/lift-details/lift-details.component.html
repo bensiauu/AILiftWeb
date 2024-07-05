@@ -13,11 +13,13 @@
     </header>
     <div class="middle">
         <div class="trip-details">
-            <h2>Trips History {{ fromDateTime }} - {{ toDateTime }}</h2>
-            <kendo-grid [data]="faults" >
+            <h2>Trips History ({{formattedFromDateTime}} - {{formattedToDateTime}}) </h2>
+            <kendo-grid #grid [kendoGridBinding]="faults" [pageSize]="20" [selectable]="{ mode: 'single' }" [pageable]="true"
+                [sortable]="true" [scrollable]="true" (selectionChange)="onSelectionChange($event)" [height]="450">
                 <kendo-grid-column field="tripNumber" title="Trip Number"></kendo-grid-column>
                 <kendo-grid-column field="date" title="Fault Date"></kendo-grid-column>
                 <kendo-grid-column field="pStatus" title="Predicted Status"></kendo-grid-column>
+                <kendo-grid-column field="rootCause" title="Root Cause"></kendo-grid-column>
             </kendo-grid>
         </div>
         <div class="charts-container">
