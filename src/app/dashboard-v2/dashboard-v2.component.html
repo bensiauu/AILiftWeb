@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lift Health Dashboard</title>
+    <link rel="stylesheet" href="dashboard-v2.component.scss">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main class="dashboard">
+        <section class="lift-container">
+            <div class="lift-card"  *ngFor="let lift of lifts" [ngClass]="{
+                'normal': lift.status === 'normal', 
+                'faulty': lift.status === 'faulty', 
+                'maintenance': lift.status === 'maintenance', 
+                'offline': lift.status === 'offline'
+              }" 
+            (click)="navigateToLiftDetails(lift.name)">
+                <h3>{{lift.name}}</h3>
+                <img class="lift-icon" src="../../assets/img/downloaded_lift_icon.png" alt="Lift Icon">
+            </div>
+        </section>
+        <section class="title-line">
+            <h3>24 Hour Statistics</h3>
+            <div class="status-legend">
+                <div class="status normal">
+                    <span class="dot"></span> Normal
+                </div>
+                <div class="status faulty">
+                    <span class="dot"></span> Faulty
+                </div>
+                <div class="status maintenance">
+                    <span class="dot"></span> Maintenance
+                </div>
+                <div class="status offline">
+                    <span class="dot"></span> Offline
+                </div>
+            </div>
+        </section>
+        <section class="stats-container">
+            <div class="pie-chart-container">
+                <kendo-chart>
+                    <kendo-chart-title text="Lift Status"></kendo-chart-title>
+               
+                    <!-- Define the Category Axis -->
+                    <kendo-chart-category-axis>
+                      <kendo-chart-category-axis-item [categories]="['S0160L01A', 'S0160L04A', 'S0160L05A', 'S0160L03A']">
+                      <kendo-chart-category-axis-item-labels [rotation]="45"></kendo-chart-category-axis-item-labels>
+                      </kendo-chart-category-axis-item>
+                    </kendo-chart-category-axis>
+               
+                    <!-- Define a Single Value Axis -->
+                    <kendo-chart-value-axis>
+                      <kendo-chart-value-axis-item name="singleAxis">
+                      </kendo-chart-value-axis-item>
+                    </kendo-chart-value-axis>
+               
+                    <!-- Define the Series and Assign to the Single Value Axis -->
+                    <kendo-chart-series>
+                      <kendo-chart-series-item type="column" [stack]="true" name="Normal" [data]="[100, 123, 234, 343]" axis="singleAxis" color="#00A307">
+                      </kendo-chart-series-item>
+                      <kendo-chart-series-item type="column" [stack]="true" name="Sev 2 Fault" [data]="[120, 67, 231, 196]" axis="singleAxis" color="#FD9800">
+                      </kendo-chart-series-item>
+                      <kendo-chart-series-item type="column" [stack]="true" name="Sev 1 Fault" [data]="[45, 124, 189, 143]" axis="singleAxis" color="#E70E00">
+                      </kendo-chart-series-item>
+                    </kendo-chart-series>
+                  </kendo-chart>
+            </div>
+            <div class="faults">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Latest Faults</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let fault of faults">
+                            <td>{{ fault.name }}</td>
+                            <td>{{ fault.date }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

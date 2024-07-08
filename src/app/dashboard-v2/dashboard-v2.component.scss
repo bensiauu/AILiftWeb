@@ -1,0 +1,185 @@
+body {
+    background: #f4f7f9;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard {
+    height: 90vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow:auto;
+}
+
+h2 {
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.lift-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .lift-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: calc(25% - 20px);
+    height: auto;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #E3E9EE;
+    transition: box-shadow 0.3s ease;
+    border-left: 10px solid transparent; 
+    flex-grow: 1;
+  }
+  
+  .lift-card.normal {
+    border-left-color: green; 
+  }
+  
+  .lift-card.faulty {
+    border-left-color: red; 
+  }
+  
+  .lift-card.maintenance {
+    border-left-color: orange; 
+  }
+  
+  .lift-card.offline {
+    border-left-color: grey; 
+  }
+  
+  .lift-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .lift-card.selected {
+    border-top: 2px solid #007bff;
+    border-right: 2px solid #007bff;
+    border-bottom: 2px solid #007bff;
+    border-left-width: 10px; 
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .lift-card h3 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .lift-card .lift-icon {
+    width: 40%;
+    height: 40%;
+    margin-bottom: 5px;
+    object-fit: contain;
+    flex-grow: 1;
+    background: none;
+  }
+
+.title-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.status-legend {
+    display: flex;
+    gap: 10px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.status .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status.normal .dot {
+    background: #4caf50;
+}
+
+.status.faulty .dot {
+    background: #f44336;
+}
+
+.status.maintenance .dot {
+    background: #ff9800;
+}
+
+.status.offline .dot {
+    background: #9e9e9e;
+}
+
+.stats-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: auto auto;
+
+    .k-chart {
+        border-radius: 10px; /* Add border radius */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
+        overflow: hidden; /* Ensure the border radius applies correctly */
+      }
+}
+
+.faults {
+    flex: 1;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    background-color: #fff; /* Add background color */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add box shadow */
+    border-radius: 10px; /* Add border radius */
+    overflow: hidden; /* Ensure rounded corners */
+  }
+  
+  th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  th {
+    background-color: #f1f1f1; /* Add background color to header */
+    font-weight: bold;
+  }
+  
+  tr {
+    height: 40px; /* Set a fixed height for all rows */
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tr:nth-child(odd) {
+    background-color: #fff;
+  }
+  

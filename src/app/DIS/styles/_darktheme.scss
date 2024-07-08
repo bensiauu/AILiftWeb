@@ -151,9 +151,6 @@ body {
 
   .k-chart-surface {
     svg {
-      > g > path:first-child {
-        fill: $body-bg;
-      }
       path[fill-opacity="0.6"]:not(:only-child){
         fill-opacity: 0;
       }

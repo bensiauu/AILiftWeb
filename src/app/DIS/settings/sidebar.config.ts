@@ -41,7 +41,7 @@ export const config = [
   {
     group: 'Dashboard',
     icon: 'crosstab',
-    link: './dashboard',
+    link: './dashboard-v2',
     elevation: [] // Specify user roles allowed to see this link: NOT YET IMPLEMENTED
   },
   // {
