@@ -1,27 +1,27 @@
 ### STAGE 1: Build ###
 
 # We label our stage as ‘builder’
-FROM node:14-alpine as builder
+FROM node:18.19-alpine as builder
 
 COPY package.json ./
+COPY package-lock.json ./
 
 RUN apk add --no-cache git
 RUN git --version
 
 ## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
 RUN npm install -g angular
-RUN npm i && mkdir /ng-app && mv ./node_modules ./ng-app
+RUN npm ci && mkdir /ng-app && mv ./node_modules ./ng-app
 
 WORKDIR /ng-app
 
 COPY . .
 
 ## Build the angular app in production mode and store the artifacts in dist folder
-RUN $(npm bin)/ng build --output-path=dist
+RUN ./node_modules/.bin/ng build  --output-path=dist --base-href /tr-pqm/ui/
 ## Run kendo license
 COPY kendo-ui-license.txt ./
 RUN npm install --save @progress/kendo-licensing && npx kendo-ui-license activate
-
 
 
 ### STAGE 2: Setup ###
