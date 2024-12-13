@@ -75,6 +75,7 @@ import { ProfileSettingComponent } from '@dis/components/profile-setting/profile
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardV2Component } from './dashboard-v2/dashboard-v2.component';
 import { LiftDetailsComponent } from './lift-details/lift-details.component';
+import { PeriodStatisticsComponent } from './period-statistics/period-statistics.component';
 
 // Sort
 // @ts-ignore
@@ -103,6 +104,7 @@ import { LiftDetailsComponent } from './lift-details/lift-details.component';
     DashboardComponent,
     DashboardV2Component,
     LiftDetailsComponent,
+    PeriodStatisticsComponent,
   ],
   imports: [
     JwtModule.forRoot({

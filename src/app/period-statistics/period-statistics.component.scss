@@ -1,0 +1,150 @@
+.title-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.status-legend {
+    display: flex;
+    gap: 10px;
+}
+
+.status {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+}
+
+.status .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.status.normal .dot {
+    background: #4caf50;
+}
+
+.status.faulty .dot {
+    background: #f44336;
+}
+
+.status.maintenance .dot {
+    background: #ff9800;
+}
+
+.status.offline .dot {
+    background: #9e9e9e;
+}
+
+.stats-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
+
+    .chart-container {
+        width: 100%;
+    }
+
+    .k-chart {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .faults {
+        width: 100%;
+    }
+}
+
+
+.time-range-toggle {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+.time-range-btn {
+    padding: 10px 20px;
+    background-color: #003087;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+    height: 48px;
+    /* Set a fixed height */
+    display: flex;
+    align-items: center;
+    /* Center content vertically */
+    justify-content: center;
+    /* Center content horizontally */
+    position: relative;
+    z-index: 2;
+    /* Ensure it stays on top */
+}
+
+.time-range-options {
+    position: absolute;
+    top: 0;
+    /* Align with the button vertically */
+    left: 100%;
+    /* Display next to the button */
+    background-color: #395fa6;
+    /* Lighter shade of the button */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    z-index: 1;
+    /* Behind the button */
+    opacity: 0;
+    /* Hidden by default */
+    pointer-events: none;
+    /* Prevent interaction when hidden */
+    transform: translateX(-10px);
+    /* Slight offset for animation */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    height: 48px;
+    width: auto;
+    /* Same height as the button */
+}
+
+.time-range-options.show {
+    opacity: 1;
+    /* Make visible */
+    pointer-events: auto;
+    /* Enable interaction */
+    transform: translateX(0);
+    /* Slide into position */
+}
+
+.option {
+    padding: 8px 15px;
+    /* Adjust padding for a smaller appearance */
+    cursor: pointer;
+    text-align: center;
+    color: #333;
+    font-size: 14px;
+    /* Smaller text size */
+    display: flex;
+    align-items: center;
+    /* Center text vertically */
+    justify-content: center;
+    /* Center text horizontally */
+    background-color: #f0f4ff;
+    /* Match options background */
+}
+
+.option:hover {
+    background-color: #e6edff;
+    /* Slightly darker background on hover */
+}
+
+.option+.option {
+    border-top: 1px solid #d0d8ff;
+    /* Add a separator between options */
+}
