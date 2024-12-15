@@ -1,25 +1,44 @@
 <div class="lift-details">
     <header>
         <h1>{{ liftName }}</h1>
-        <div class="date-picker">
-            <label for="fromDateTime">From:</label>
-            <kendo-datetimepicker [(ngModel)]="fromDateTime" [format]="'MM/dd/yyyy HH:mm'" [min]="minDateTime"
-                [max]="maxDateTime" id="fromDateTime"></kendo-datetimepicker>
+<div class="date-picker">
+    <label for="fromDateTime">From:</label>
+    <kendo-datetimepicker
+        [(ngModel)]="fromDateTime"
+        [format]="'MM/dd/yyyy HH:mm'"
+        [min]="minDateTime"
+        [max]="maxDateTime"
+        id="fromDateTime"
+        (ngModelChange)="onDateChange()">
+    </kendo-datetimepicker>
 
-            <label for="toDateTime">To:</label>
-            <kendo-datetimepicker [(ngModel)]="toDateTime" [format]="'MM/dd/yyyy HH:mm'" [min]="fromDateTime"
-                [max]="maxDateTime" id="toDateTime"></kendo-datetimepicker>
-        </div>
+    <label for="toDateTime">To:</label>
+    <kendo-datetimepicker
+        [(ngModel)]="toDateTime"
+        [format]="'MM/dd/yyyy HH:mm'"
+        [min]="fromDateTime"
+        [max]="maxDateTime"
+        id="toDateTime"
+        (ngModelChange)="onDateChange()">
+    </kendo-datetimepicker>
+</div>
     </header>
     <div class="middle">
         <div class="trip-details">
             <h2>Trips History ({{formattedFromDateTime}} - {{formattedToDateTime}}) </h2>
-            <kendo-grid #grid [kendoGridBinding]="faults" [pageSize]="20" [selectable]="{ mode: 'single' }" [pageable]="true"
+            <kendo-grid #grid [kendoGridBinding]="trips" [pageSize]="20" [selectable]="{ mode: 'single' }" [pageable]="true"
                 [sortable]="true" [scrollable]="true" (selectionChange)="onSelectionChange($event)" [height]="450">
-                <kendo-grid-column field="tripNumber" title="Trip Number"></kendo-grid-column>
-                <kendo-grid-column field="date" title="Fault Date"></kendo-grid-column>
-                <kendo-grid-column field="pStatus" title="Predicted Status"></kendo-grid-column>
-                <kendo-grid-column field="rootCause" title="Root Cause"></kendo-grid-column>
+                <kendo-grid-column field="data.serial_number" title="Lift"></kendo-grid-column>
+                <kendo-grid-column field="data.trip_no" title="Trip Number"></kendo-grid-column>
+                <kendo-grid-column 
+                    field="data.start_time" 
+                    title="Trip Date" 
+                    [format]="'dd/MM/yyyy hh:mm a'">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ dataItem.data.start_time | date: 'dd/MM/yyyy hh:mm a' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="prediction" title="Fault Type"></kendo-grid-column>
             </kendo-grid>
         </div>
         <div class="charts-container">
@@ -28,7 +47,7 @@
                     <kendo-chart-title text="Channel Z"></kendo-chart-title>
                     <kendo-chart-category-axis>
                         <kendo-chart-category-axis-item [categories]="categories">
-                            <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700"
+                            <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="1000" majorUnit="0.04"
                                 position="end"></kendo-chart-category-axis-item-labels>
                         </kendo-chart-category-axis-item>
                     </kendo-chart-category-axis>
@@ -43,7 +62,7 @@
                     <kendo-chart-title text="Channel Y"></kendo-chart-title>
                     <kendo-chart-category-axis>
                         <kendo-chart-category-axis-item [categories]="categories">
-                            <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700"
+                            <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="1000"
                                 position="end"></kendo-chart-category-axis-item-labels>
                         </kendo-chart-category-axis-item>
                     </kendo-chart-category-axis>
@@ -58,7 +77,7 @@
                     <kendo-chart-title text="Channel X"></kendo-chart-title>
                     <kendo-chart-category-axis>
                         <kendo-chart-category-axis-item [categories]="categories">
-                            <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="700"
+                            <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="1000"
                                 position="end"></kendo-chart-category-axis-item-labels>
                         </kendo-chart-category-axis-item>
                     </kendo-chart-category-axis>
