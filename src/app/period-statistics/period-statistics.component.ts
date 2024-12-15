@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
@@ -19,7 +19,7 @@ export class PeriodStatisticsComponent {
   selectedRange = "24 Hours"; // Default selection
   showOptions = false; // Initially, the options are hidden
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.onTimeRangeChange();
@@ -60,7 +60,7 @@ export class PeriodStatisticsComponent {
     const startDateISO = startDate.toISOString().split(".")[0];
     const endDateISO = endDate.toISOString().split(".")[0];
 
-    const apiUrl = `http://localhost:8002/api/v1/faults?start_date=${startDateISO}&end_date=${endDateISO}&page_size=5`;
+    const apiUrl = `http://localhost:8002/api/v1/faults?start_date=${startDateISO}&end_date=${endDateISO}&page_size=100`;
     this.http
       .get(apiUrl, { headers: { "Content-Type": "text/plain" } })
       .subscribe(
@@ -85,8 +85,6 @@ export class PeriodStatisticsComponent {
       console.log(fault);
       const serialNumber = fault?.data?.serial_number;
       const prediction = fault?.prediction;
-      console.log(serialNumber);
-      console.log(prediction);
 
       if (serialNumber && prediction !== undefined) {
         if (!serialMap.has(serialNumber)) {
@@ -102,7 +100,6 @@ export class PeriodStatisticsComponent {
         }
       }
     });
-    console.log(serialMap);
     // Prepare the data for the chart
     this.serialNumbers = Array.from(serialMap.keys());
     this.predictionData.prediction1 = this.serialNumbers.map(
@@ -111,9 +108,5 @@ export class PeriodStatisticsComponent {
     this.predictionData.prediction0 = this.serialNumbers.map(
       (serial) => serialMap.get(serial)?.prediction0 || 0
     );
-  }
-  // Function to return color based on prediction
-  getColor(prediction: number): string {
-    return prediction === 1 ? "#00A307" : "#FD9800"; // Green for prediction=1, Orange for prediction=0
   }
 }

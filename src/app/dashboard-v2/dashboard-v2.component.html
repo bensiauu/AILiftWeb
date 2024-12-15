@@ -12,12 +12,7 @@
 <body>
     <main class="dashboard">
         <section class="lift-container">
-            <div class="lift-card" *ngFor="let lift of lifts" [ngClass]="{
-                'normal': lift.status === 'normal', 
-                'faulty': lift.status === 'faulty', 
-                'maintenance': lift.status === 'maintenance', 
-                'offline': lift.status === 'offline'
-              }" (click)="navigateToLiftDetails(lift.name)">
+            <div class="lift-card" *ngFor="let lift of lifts" (click)="navigateToLiftDetails(lift.name)">
                 <h3>{{lift.name}}</h3>
                 <img class="lift-icon" src="../../assets/img/downloaded_lift_icon.png" alt="Lift Icon">
             </div>

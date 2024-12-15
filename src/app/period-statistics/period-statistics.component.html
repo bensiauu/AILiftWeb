@@ -7,52 +7,50 @@
             <div class="option" (click)="setTimeRange('1 Year'); onTimeRangeChange()">1 Year</div>
         </div>
     </div>
-    <div class="status-legend">
-        <div class="status normal">
-            <span class="dot"></span> Normal
-        </div>
-        <div class="status maintenance">
-            <span class="dot"></span> Sev 2 Fault
-        </div>
-        <div class="status faulty">
-            <span class="dot"></span> Sev 1 Fault
-        </div>
-    </div>
 </section>
-<section class="stats-container">
+<div class="stats-container">
     <div class="chart-container">
         <kendo-chart>
-            <kendo-chart-title text="Lift Status"></kendo-chart-title>
+            <kendo-chart-title text="Latest Faults"></kendo-chart-title>
 
-            <!-- Define the Category Axis -->
             <kendo-chart-category-axis>
                 <kendo-chart-category-axis-item [categories]="serialNumbers">
-                    <kendo-chart-category-axis-item-labels [rotation]="45"></kendo-chart-category-axis-item-labels>
+                    <kendo-chart-category-axis-item-labels></kendo-chart-category-axis-item-labels>
                 </kendo-chart-category-axis-item>
             </kendo-chart-category-axis>
 
-            <!-- Define a Single Value Axis -->
             <kendo-chart-value-axis>
                 <kendo-chart-value-axis-item name="singleAxis"></kendo-chart-value-axis-item>
             </kendo-chart-value-axis>
 
-            <!-- Define the Series and Assign to the Single Value Axis -->
             <kendo-chart-series>
-                <kendo-chart-series-item type="column" [stack]="true" name="Prediction 1"
-                    [data]="predictionData.prediction1" axis="singleAxis" color="#00A307">
+                <kendo-chart-series-item type="column" [stack]="true" name="Fault 1" [data]="predictionData.prediction1"
+                    axis="singleAxis" color="#ff9800">
                 </kendo-chart-series-item>
-                <kendo-chart-series-item type="column" [stack]="true" name="Prediction 0"
-                    [data]="predictionData.prediction0" axis="singleAxis" color="#E70E00">
+                <kendo-chart-series-item type="column" [stack]="true" name="Fault 2" [data]="predictionData.prediction0"
+                    axis="singleAxis" color="#f44336">
                 </kendo-chart-series-item>
             </kendo-chart-series>
         </kendo-chart>
-
     </div>
     <div class="faults">
-        <kendo-grid [data]="faults" [pageSize]="5">
-            <kendo-grid-column field="data.serial_number" title="Serial Number" [width]="150"></kendo-grid-column>
-            <kendo-grid-column field="data.start_time" title="Start Time" [width]="200"></kendo-grid-column>
-            <kendo-grid-column field="data.trip_no" title="Trip Number" [width]="150"></kendo-grid-column>
-        </kendo-grid>
+        <div class="table-container">
+            <kendo-grid 
+                [data]="faults" 
+                [height]="380"
+                [scrollable]="'scrollable'">
+                <kendo-grid-column field="data.serial_number" title="Lift Number" [width]="150"></kendo-grid-column>
+                <kendo-grid-column 
+                    field="data.start_time" 
+                    title="Trip Date" 
+                    [width]="200"
+                    [format]="'dd/MM/yyyy hh:mm a'">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ dataItem.data.start_time | date: 'dd/MM/yyyy hh:mm a' }}
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="data.trip_no" title="Trip Number" [width]="150"></kendo-grid-column>
+            </kendo-grid>
+        </div>
     </div>
-</section>
+</div>
