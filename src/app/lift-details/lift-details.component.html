@@ -1,44 +1,45 @@
 <div class="lift-details">
     <header>
         <h1>{{ liftName }}</h1>
-<div class="date-picker">
-    <label for="fromDateTime">From:</label>
-    <kendo-datetimepicker
-        [(ngModel)]="fromDateTime"
-        [format]="'MM/dd/yyyy HH:mm'"
-        [min]="minDateTime"
-        [max]="maxDateTime"
-        id="fromDateTime"
-        (ngModelChange)="onDateChange()">
-    </kendo-datetimepicker>
+        <div class="date-picker">
+            <label for="fromDateTime">From:</label>
+            <kendo-datetimepicker [(ngModel)]="fromDateTime" [format]="'MM/dd/yyyy HH:mm'" [min]="minDateTime"
+                [max]="maxDateTime" id="fromDateTime" (ngModelChange)="onDateChange()">
+            </kendo-datetimepicker>
 
-    <label for="toDateTime">To:</label>
-    <kendo-datetimepicker
-        [(ngModel)]="toDateTime"
-        [format]="'MM/dd/yyyy HH:mm'"
-        [min]="fromDateTime"
-        [max]="maxDateTime"
-        id="toDateTime"
-        (ngModelChange)="onDateChange()">
-    </kendo-datetimepicker>
-</div>
+            <label for="toDateTime">To:</label>
+            <kendo-datetimepicker [(ngModel)]="toDateTime" [format]="'MM/dd/yyyy HH:mm'" [min]="fromDateTime"
+                [max]="maxDateTime" id="toDateTime" (ngModelChange)="onDateChange()">
+            </kendo-datetimepicker>
+        </div>
     </header>
     <div class="middle">
         <div class="trip-details">
             <h2>Trips History ({{formattedFromDateTime}} - {{formattedToDateTime}}) </h2>
-            <kendo-grid #grid [kendoGridBinding]="trips" [pageSize]="20" [selectable]="{ mode: 'single' }" [pageable]="true"
-                [sortable]="true" [scrollable]="true" (selectionChange)="onSelectionChange($event)" [height]="450">
-                <kendo-grid-column field="data.serial_number" title="Lift"></kendo-grid-column>
+            <kendo-grid #grid [kendoGridBinding]="trips" [pageSize]="20" [selectable]="{ mode: 'single' }"
+                [pageable]="true" [sortable]="true" [scrollable]="true" (selectionChange)="onSelectionChange($event)"
+                [height]="450">
                 <kendo-grid-column field="data.trip_no" title="Trip Number"></kendo-grid-column>
-                <kendo-grid-column 
-                    field="data.start_time" 
-                    title="Trip Date" 
-                    [format]="'dd/MM/yyyy hh:mm a'">
+                <kendo-grid-column field="data.start_time" title="Trip Date" [format]="'dd/MM/yyyy hh:mm a'">
                     <ng-template kendoGridCellTemplate let-dataItem>
                         {{ dataItem.data.start_time | date: 'dd/MM/yyyy hh:mm a' }}
                     </ng-template>
                 </kendo-grid-column>
-                <kendo-grid-column field="prediction" title="Fault Type"></kendo-grid-column>
+                <kendo-grid-column title="Failure Probability">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <ng-container *ngIf="dataItem.prediction?.length > 0">
+                            <kendo-circulargauge [value]="(70) " [scale]="{ min: 0, max: 100 }"
+                                style="width: 80px; height: 80px; max-height: 80px; max-width: 80px; padding-left: 2rem;">
+                            </kendo-circulargauge>
+                        </ng-container>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column title="Fault Type">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        {{ getFaultType(dataItem.prediction) }}
+                    </ng-template>
+                </kendo-grid-column>
+
             </kendo-grid>
         </div>
         <div class="charts-container">
@@ -94,15 +95,22 @@
             <kendo-chart>
                 <kendo-chart-title text="Predicted Fault History"></kendo-chart-title>
                 <kendo-chart-category-axis>
-                    <kendo-chart-category-axis-item
-                        [categories]="['Fault 1', 'Fault 2', 'Fault 3', 'Fault 4']"></kendo-chart-category-axis-item>
+                    <kendo-chart-category-axis-item [categories]="faultCategories" [line]="{ visible: false }">
+                    </kendo-chart-category-axis-item>
                 </kendo-chart-category-axis>
+
+                <kendo-chart-value-axis>
+                    <kendo-chart-value-axis-item [min]="0" [majorUnit]="1">
+                    </kendo-chart-value-axis-item>
+                </kendo-chart-value-axis>
+
                 <kendo-chart-series>
-                    <kendo-chart-x-axis-item name="Fault1"></kendo-chart-x-axis-item>
-                    <kendo-chart-series-item type="column" labels="Fault 1" [data]="[1, 2, 3, 5]"
-                        color="#5687F2"></kendo-chart-series-item>
+                    <kendo-chart-series-item type="bar" [data]="faultData" color="#5687F2">
+                    </kendo-chart-series-item>
                 </kendo-chart-series>
             </kendo-chart>
         </div>
     </div>
+
+
 </div>
