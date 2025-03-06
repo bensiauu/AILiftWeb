@@ -10,40 +10,41 @@
 </section>
 <div class="stats-container">
     <div class="chart-container">
-        <kendo-chart>
+        <kendo-chart [seriesDefaults]="{ stack: true, stackType: 'normal' }">
             <kendo-chart-title text="Latest Faults"></kendo-chart-title>
 
+            <!-- X-Axis for Lift Serial Numbers -->
             <kendo-chart-category-axis>
                 <kendo-chart-category-axis-item [categories]="serialNumbers">
                     <kendo-chart-category-axis-item-labels></kendo-chart-category-axis-item-labels>
                 </kendo-chart-category-axis-item>
             </kendo-chart-category-axis>
 
+            <!-- Y-Axis for Fault Occurrences -->
             <kendo-chart-value-axis>
-                <kendo-chart-value-axis-item name="singleAxis"></kendo-chart-value-axis-item>
+                <kendo-chart-value-axis-item name="faultAxis" [min]="0" [majorUnit]="1">
+                </kendo-chart-value-axis-item>
             </kendo-chart-value-axis>
 
+
+            <!-- Dynamically Generate Series for Each Fault Type -->
             <kendo-chart-series>
-                <kendo-chart-series-item type="column" [stack]="true" name="Fault 1" [data]="predictionData.prediction1"
-                    axis="singleAxis" color="#ff9800">
-                </kendo-chart-series-item>
-                <kendo-chart-series-item type="column" [stack]="true" name="Fault 2" [data]="predictionData.prediction0"
-                    axis="singleAxis" color="#f44336">
-                </kendo-chart-series-item>
+                <ng-container *ngFor="let faultType of faultTypes">
+                    <kendo-chart-series-item type="column" [name]="faultType" [data]="predictionData[faultType]"
+                        axis="faultAxis" [color]="getFaultColor(faultType)">
+                    </kendo-chart-series-item>
+                </ng-container>
             </kendo-chart-series>
         </kendo-chart>
+
+
     </div>
+
     <div class="faults">
         <div class="table-container">
-            <kendo-grid 
-                [data]="faults" 
-                [height]="380"
-                [scrollable]="'scrollable'">
+            <kendo-grid [data]="faults" [height]="380" [scrollable]="'scrollable'">
                 <kendo-grid-column field="data.serial_number" title="Lift Number" [width]="150"></kendo-grid-column>
-                <kendo-grid-column 
-                    field="data.start_time" 
-                    title="Trip Date" 
-                    [width]="200"
+                <kendo-grid-column field="data.start_time" title="Trip Date" [width]="200"
                     [format]="'dd/MM/yyyy hh:mm a'">
                     <ng-template kendoGridCellTemplate let-dataItem>
                         {{ dataItem.data.start_time | date: 'dd/MM/yyyy hh:mm a' }}

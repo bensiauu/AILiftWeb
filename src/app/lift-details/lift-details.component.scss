@@ -14,112 +14,129 @@ body {
     padding: 0;
 }
 
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 0 10%;
+    background-color: $lift-header-bg;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid $lift-border-color;
+    border-radius: 8px 8px 0 0;
+
+    h1 {
+        font-size: 1.5rem;
+        color: $lift-primary-color;
+        margin: 0;
+    }
+}
+
+.date-picker {
+    display: flex;
+    gap: 1rem;
+
+    kendo-datetimepicker {
+        width: 200px;
+        height: 30px;
+
+        .k-input {
+            height: 30px;
+            font-size: 12px;
+        }
+
+        .k-select {
+            height: 30px;
+        }
+    }
+}
+
 .lift-details {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     height: 90vh;
     padding: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     background-color: $lift-middle-bg;
 
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex: 0 0 10%;
-        background-color: $lift-header-bg;
-        padding: 0.5rem 1rem;
-        border-bottom: 1px solid $lift-border-color;
-        border-radius: 8px 8px 0 0;
 
-        h1 {
-            font-size: 1.5rem;
+    /* Both trip-details and row1 share 50% of the width */
+    .trip-details,
+    .row1 {
+        flex: 1 1 50%;
+        margin-right: 1rem; // optional, for spacing between the two sections
+    }
+
+    .trip-details {
+        min-width: 0;
+        overflow: hidden;
+        background-color: $lift-middle-bg;
+        border: 1px solid $lift-border-color;
+        border-radius: 8px;
+        padding: 1rem;
+
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        h2 {
+            font-size: 1.2rem;
             color: $lift-primary-color;
-            margin: 0;
+            margin-bottom: 0.5rem;
         }
 
-        .date-picker {
-            display: flex;
-            gap: 1rem;
+        kendo-grid {
+            border: none;
 
-            kendo-datetimepicker {
-                width: 200px;
-                height: 30px;
+            ::ng-deep .k-grid-header {
+                background-color: $lift-secondary-color;
+                color: $lift-primary-color;
 
-                .k-input {
-                    height: 30px;
-                    font-size: 12px;
+                .k-header {
+                    font-weight: bold;
                 }
+            }
 
-                .k-select {
-                    height: 30px;
-                }
+            ::ng-deep .k-grid td {
+                height: 40px;
+                line-height: 40px;
             }
         }
     }
 
-    .middle {
+    .row1 {
         display: flex;
-        flex: 1 1 auto;
+        flex-direction: column;
         gap: 1rem;
-        padding: 1rem 0;
-        overflow: hidden; // Ensure content does not overflow
+        background-color: $lift-row1-bg;
+        padding: 1rem;
+        border-radius: 0 0 8px 8px;
+        border-top: 1px solid $lift-border-color;
 
-        .trip-details {
-            flex: 1;
-            min-width: 0;
+        /* Bar Chart Container taking 40% of .row1's height */
+        .bar-chart-container {
+            flex: 0 0 30%;
             overflow: hidden;
-            background-color: $lift-middle-bg;
-            border: 1px solid $lift-border-color;
-            border-radius: 8px;
-            padding: 1rem;
+
+            kendo-chart {
+                height: 100%;
+                width: 100%;
+            }
         }
 
+        /* Other charts or content inside row1 take the remaining 60% */
         .charts-container {
-            flex: 1;
+            flex: 1 1 70%;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
             min-width: 0;
             overflow: auto;
             background-color: $lift-middle-bg;
             border: 1px solid $lift-border-color;
             border-radius: 8px;
             padding: 1rem;
-        }
-
-        .trip-details {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-
-            h2 {
-                font-size: 1.2rem;
-                color: $lift-primary-color;
-                margin-bottom: 0.5rem;
-            }
-
-            kendo-grid {
-                border: none;
-
-                ::ng-deep .k-grid-header {
-                    background-color: $lift-secondary-color;
-                    color: $lift-primary-color;
-
-                    .k-header {
-                        font-weight: bold;
-                    }
-                }
-
-                ::ng-deep .k-grid td {
-                    height: 40px;
-                    line-height: 40px;
-                }
-            }
-        }
-
-        .charts-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
 
             >div {
                 flex: 1;
@@ -131,29 +148,12 @@ body {
             }
         }
     }
-
-    .row1 {
-        display: flex;
-        flex-direction: column;
-        flex: 0 0 20%;
-        gap: 1rem;
-        background-color: $lift-row1-bg;
-        padding: 1rem;
-        border-radius: 0 0 8px 8px;
-        border-top: 1px solid $lift-border-color;
-
-        .bar-chart-container {
-            height: 100%;
-            overflow: hidden;
-
-            kendo-chart {
-                height: 100%;
-                width: 100%;
-            }
-        }
-    }
 }
 
 h2 {
     margin-top: 20px;
+}
+
+.text-center {
+    text-align: center;
 }

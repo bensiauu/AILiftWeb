@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
+import { GridComponent } from "@progress/kendo-angular-grid";
 
 @Component({
     selector: "app-lift-details",
@@ -17,6 +18,8 @@ export class LiftDetailsComponent implements OnInit {
     zData: any[] = [];
     categories: any[] = [];
 
+
+
     // For date picker
     fromDateTime: Date = new Date();
     toDateTime: Date = new Date();
@@ -27,7 +30,14 @@ export class LiftDetailsComponent implements OnInit {
 
 
     public selectedTrip: any;
+    public selectedTripNo: any[] = [0];
     public trips: any[] = [];
+    predefinedColors: { [key: string]: string } = {
+        'Healthy': '#66BB6A',
+        'Fault 1: Jerk (X/Y/Z)': '#FDD835',
+        'Fault 2: Abnormal Acceleration': '#FFA726',
+        'Fault 3: Sudden Stop': '#EF5350'
+    };
 
     constructor(private route: ActivatedRoute, private http: HttpClient) { }
 
@@ -38,23 +48,20 @@ export class LiftDetailsComponent implements OnInit {
             this.toDateTime = new Date()
             this.formattedFromDateTime = this.fromDateTime.toDateString();
             this.formattedToDateTime = this.toDateTime.toDateString();
-            this.fetchFaultData();
+            this.fetchTripData();
+            this.updateFaultBarChart();
         });
     }
 
-    ngAfterInit(): void {
-        this.updateFaultChart();
-    }
 
     onDateChange(): void {
-        this.fetchFaultData();
+        this.fetchTripData();
         this.formattedFromDateTime = this.fromDateTime.toDateString();
         this.formattedToDateTime = this.toDateTime.toDateString();
-        this.updateFaultChart();
     }
 
     // Fetch fault data from the API
-    fetchFaultData(): void {
+    fetchTripData(): void {
         const startDateISO = this.fromDateTime.toISOString().split(".")[0];
         const endDateISO = this.toDateTime.toISOString().split(".")[0];
 
@@ -63,6 +70,15 @@ export class LiftDetailsComponent implements OnInit {
         this.http.get(apiUrl, { headers: { "Content-Type": "text/plain" } }).subscribe(
             (response: any) => {
                 this.trips = response || [];
+
+                // Automatically select the first row, if available.
+                if (this.trips.length > 0) {
+                    this.selectedTripNo[0] = this.trips[0].data.trip_no;
+                    this.selectedTrip = this.trips[0];
+                    this.processData();
+                    this.updateFaultBarChart();
+                }
+                console.log("trip num from request:", this.selectedTripNo);
             },
             (error) => {
                 console.error("Error fetching faults:", error);
@@ -72,6 +88,8 @@ export class LiftDetailsComponent implements OnInit {
 
     public onSelectionChange(event: any): void {
         this.selectedTrip = event.selectedRows[0].dataItem;
+        this.selectedTripNo[0] = event.selectedRows[0].dataItem.data.trip_no;
+        console.log("trip num: ", this.selectedTripNo);
         this.processData();
     }
 
@@ -88,22 +106,34 @@ export class LiftDetailsComponent implements OnInit {
         return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000000;
     }
 
+    public xAxisMax: any;
+    public xAxisStep: any;
     processData() {
-        // Process the lbb data and populate necessary arrays
         const data = this.selectedTrip.data.lbb;
-        this.xData = data.map((item: { x: any; }) => item.x);
-        this.yData = data.map((item: { y: any; }) => item.y);
-        this.zData = data.map((item: { z: any; }) => item.z);
-        const timestamps = data.map((item: { timestamp: any; }) => item.timestamp);
-        const startTimestamp = timestamps[0];  // Get the first timestamp
-        const startTimeInSeconds = this.parseTimestamp(startTimestamp);
 
-        // Calculate elapsed time in seconds for each data point
-        this.categories = timestamps.map((timestamp: string) => {
-            const elapsedTime = this.parseTimestamp(timestamp) - startTimeInSeconds;
-            return elapsedTime;
-        });
+        console.log("i should be preparing data for ", this.selectedTrip.data.trip_no);
+        if (!data || data.length === 0) return;
+
+        // Extract XYZ data
+        this.xData = data.map((item) => item.x);
+        this.yData = data.map((item) => item.y);
+        this.zData = data.map((item) => item.z);
+
+        // Extract timestamps and normalize them
+        const timestamps = data.map((item) => item.timestamp);
+        const startTimeInSeconds = this.parseTimestamp(timestamps[0]);
+
+        // Compute elapsed time (in seconds) for each timestamp
+        const elapsedTimes = timestamps.map(ts => this.parseTimestamp(ts) - startTimeInSeconds);
+
+        // Save elapsed times as the categories (x-axis values)
+        this.categories = elapsedTimes;
+
+        // Calculate max value and a reasonable step (e.g., divide into 10 intervals)
+        this.xAxisMax = elapsedTimes[elapsedTimes.length - 1];
+        this.xAxisStep = Math.ceil(this.xAxisMax.length / 5);
     }
+
 
     getFaultType(predictions: any[]): string {
         if (!predictions || predictions.length === 0) {
@@ -114,10 +144,15 @@ export class LiftDetailsComponent implements OnInit {
         return fault ? fault.fault_type : "Healthy"; // Return the first non-Healthy fault type or default to Healthy
     }
 
-    faultCategories: string[] = ['Jerk (X/Y/Z)', 'Sudden drop'];
-    faultData: number[] = [];
+    getGaugeColor(predictions: any[]): string {
+        const fault = this.getFaultType(predictions);
+        return this.predefinedColors[fault];
+    }
 
-    updateFaultChart(): void {
+    faultCategories: string[] = [];
+    faultData: any[] = [];
+
+    updateFaultBarChart(): void {
 
         // Collect fault types from all trips, excluding "Healthy"
         let faultCounts: { [key: string]: number } = {};
@@ -131,13 +166,18 @@ export class LiftDetailsComponent implements OnInit {
                 });
             }
         });
+        // Convert the faultCounts object into an array of key-value pairs, sort it, then extract keys & values
+        const sortedFaults = Object.entries(faultCounts).sort(([a], [b]) => a.localeCompare(b));
 
-        // If no faults found, default to "Healthy"
-        if (Object.keys(faultCounts).length === 0) {
-            this.faultData = [1]; // Default if all predictions are "Healthy"
-        } else {
-            this.faultData = Object.values(faultCounts);
-        }
+        // Extract sorted categories and their corresponding counts
+        this.faultCategories = sortedFaults.map(([key]) => key);
+        this.faultData = sortedFaults.map(([, value]) => value);
+        // Create an array of faultData objects that include the fault type, count, and corresponding color.
+        this.faultData = sortedFaults.map(([faultType, count]) => ({
+            category: faultType,
+            value: count,
+            color: this.predefinedColors[faultType] || '#5687F2' // Fallback color if not defined
+        }));
 
     }
 

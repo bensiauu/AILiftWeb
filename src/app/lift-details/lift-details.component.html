@@ -1,99 +1,128 @@
+<header>
+    <h1>{{ liftName }}</h1>
+    <div class="date-picker">
+        <label for="fromDateTime">From:</label>
+        <kendo-datetimepicker [(ngModel)]="fromDateTime" [format]="'MM/dd/yyyy HH:mm'" [min]="minDateTime"
+            [max]="maxDateTime" id="fromDateTime" (ngModelChange)="onDateChange()">
+        </kendo-datetimepicker>
+
+        <label for="toDateTime">To:</label>
+        <kendo-datetimepicker [(ngModel)]="toDateTime" [format]="'MM/dd/yyyy HH:mm'" [min]="fromDateTime"
+            [max]="maxDateTime" id="toDateTime" (ngModelChange)="onDateChange()">
+        </kendo-datetimepicker>
+    </div>
+</header>
 <div class="lift-details">
-    <header>
-        <h1>{{ liftName }}</h1>
-        <div class="date-picker">
-            <label for="fromDateTime">From:</label>
-            <kendo-datetimepicker [(ngModel)]="fromDateTime" [format]="'MM/dd/yyyy HH:mm'" [min]="minDateTime"
-                [max]="maxDateTime" id="fromDateTime" (ngModelChange)="onDateChange()">
-            </kendo-datetimepicker>
 
-            <label for="toDateTime">To:</label>
-            <kendo-datetimepicker [(ngModel)]="toDateTime" [format]="'MM/dd/yyyy HH:mm'" [min]="fromDateTime"
-                [max]="maxDateTime" id="toDateTime" (ngModelChange)="onDateChange()">
-            </kendo-datetimepicker>
-        </div>
-    </header>
-    <div class="middle">
-        <div class="trip-details">
-            <h2>Trips History ({{formattedFromDateTime}} - {{formattedToDateTime}}) </h2>
-            <kendo-grid #grid [kendoGridBinding]="trips" [pageSize]="20" [selectable]="{ mode: 'single' }"
-                [pageable]="true" [sortable]="true" [scrollable]="true" (selectionChange)="onSelectionChange($event)"
-                [height]="450">
-                <kendo-grid-column field="data.trip_no" title="Trip Number"></kendo-grid-column>
-                <kendo-grid-column field="data.start_time" title="Trip Date" [format]="'dd/MM/yyyy hh:mm a'">
-                    <ng-template kendoGridCellTemplate let-dataItem>
-                        {{ dataItem.data.start_time | date: 'dd/MM/yyyy hh:mm a' }}
-                    </ng-template>
-                </kendo-grid-column>
-                <kendo-grid-column title="Failure Probability">
-                    <ng-template kendoGridCellTemplate let-dataItem>
-                        <ng-container *ngIf="dataItem.prediction?.length > 0">
-                            <kendo-circulargauge [value]="(70) " [scale]="{ min: 0, max: 100 }"
-                                style="width: 80px; height: 80px; max-height: 80px; max-width: 80px; padding-left: 2rem;">
-                            </kendo-circulargauge>
-                        </ng-container>
-                    </ng-template>
-                </kendo-grid-column>
-                <kendo-grid-column title="Fault Type">
-                    <ng-template kendoGridCellTemplate let-dataItem>
-                        {{ getFaultType(dataItem.prediction) }}
-                    </ng-template>
-                </kendo-grid-column>
+    <div class="trip-details">
+        <h2>Trips History ({{formattedFromDateTime}} - {{formattedToDateTime}}) </h2>
+        <kendo-grid #grid [kendoGridBinding]="trips" [pageSize]="20" [selectable]="{ mode: 'single' }"
+            [kendoGridSelectBy]="selectedTripNo" [pageable]="true" [sortable]="true" [scrollable]="true"
+            (selectionChange)="onSelectionChange($event)" [height]="600" [selectedKeys]="selectedTripNo">
+            <kendo-grid-column field="data.trip_no" title="Trip No." width="90px"
+                [headerStyle]="{ justifyContent: 'center' }" [class]="'text-center'"></kendo-grid-column>
+            <kendo-grid-column field="data.start_time" title="Trip Date" [format]="'dd/MM/yyyy hh:mm a'"
+                [headerStyle]="{ justifyContent: 'center' }">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ dataItem.data.start_time | date: 'dd/MM/yyyy hh:mm a' }}
+                </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column title="Failure Probability" [headerStyle]="{ justifyContent: 'center' }">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <ng-container *ngIf="dataItem.prediction?.length > 0">
+                        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                            <kendo-arcgauge class="custom-gauge" [value]="70" [scale]="{ min: 0, max: 100 }"
+                                [color]="getGaugeColor(dataItem.prediction)" style="width: 90px; height: 90px;">
+                                <ng-template kendoArcGaugeCenterTemplate>
+                                    <div style="font-size: 16px; font-weight: bold;">70%</div>
+                                </ng-template>
+                            </kendo-arcgauge>
+                        </div>
+                    </ng-container>
+                </ng-template>
+            </kendo-grid-column>
 
-            </kendo-grid>
-        </div>
+            <kendo-grid-column title="Fault Type" width="100px" [class]="'text-center'">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    {{ getFaultType(dataItem.prediction) }}
+                </ng-template>
+            </kendo-grid-column>
+        </kendo-grid>
+    </div>
+    <div class="row1">
+
         <div class="charts-container">
+            <!-- CHANNEL Z CHART -->
             <div>
                 <kendo-chart>
                     <kendo-chart-title text="Channel Z"></kendo-chart-title>
-                    <kendo-chart-category-axis>
-                        <kendo-chart-category-axis-item [categories]="categories">
-                            <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="1000" majorUnit="0.04"
-                                position="end"></kendo-chart-category-axis-item-labels>
-                        </kendo-chart-category-axis-item>
-                    </kendo-chart-category-axis>
+
+                    <!-- Y-Axis (Value Axis) with a Title -->
+                    <kendo-chart-value-axis>
+                        <kendo-chart-value-axis-item [labels]="{ format: 'n2' }" [majorGridLines]="{ visible: true }"
+                            [minorGridLines]="{ visible: false }" [majorUnit]="0.1" [title]="{ text: 'milli(g)' }">
+                        </kendo-chart-value-axis-item>
+                    </kendo-chart-value-axis>
+
+                    <!-- Data Series -->
                     <kendo-chart-series>
-                        <kendo-chart-series-item style="pointer-events: none;" [data]="zData" type="line"
-                            [markers]="false"></kendo-chart-series-item>
+                        <kendo-chart-series-item [data]="zData" type="line" [markers]="{ visible: false }"
+                            style="pointer-events: none;">
+                        </kendo-chart-series-item>
                     </kendo-chart-series>
                 </kendo-chart>
             </div>
-            <div>
-                <kendo-chart>
-                    <kendo-chart-title text="Channel Y"></kendo-chart-title>
-                    <kendo-chart-category-axis>
-                        <kendo-chart-category-axis-item [categories]="categories">
-                            <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="1000"
-                                position="end"></kendo-chart-category-axis-item-labels>
-                        </kendo-chart-category-axis-item>
-                    </kendo-chart-category-axis>
-                    <kendo-chart-series>
-                        <kendo-chart-series-item style="pointer-events: none;" [data]="yData" type="line"
-                            [markers]="false"></kendo-chart-series-item>
-                    </kendo-chart-series>
-                </kendo-chart>
-            </div>
+
+            <!-- CHANNEL X CHART -->
             <div>
                 <kendo-chart>
                     <kendo-chart-title text="Channel X"></kendo-chart-title>
-                    <kendo-chart-category-axis>
-                        <kendo-chart-category-axis-item [categories]="categories">
-                            <kendo-chart-category-axis-item-labels format="{0:HH:mm:ss}" step="1000"
-                                position="end"></kendo-chart-category-axis-item-labels>
-                        </kendo-chart-category-axis-item>
-                    </kendo-chart-category-axis>
+
+
+                    <kendo-chart-value-axis>
+                        <kendo-chart-value-axis-item [labels]="{ format: 'n2' }" [majorGridLines]="{ visible: true }"
+                            [minorGridLines]="{ visible: false }" [majorUnit]="0.02" [title]="{ text: 'milli(g)' }">
+                        </kendo-chart-value-axis-item>
+                    </kendo-chart-value-axis>
+
                     <kendo-chart-series>
-                        <kendo-chart-series-item style="pointer-events: none;" [data]="xData" type="line"
-                            [markers]="false"></kendo-chart-series-item>
+                        <kendo-chart-series-item [data]="xData" type="line" [markers]="{ visible: false }"
+                            style="pointer-events: none;">
+                        </kendo-chart-series-item>
                     </kendo-chart-series>
                 </kendo-chart>
             </div>
+
+            <!-- CHANNEL Y CHART -->
+            <div>
+                <kendo-chart>
+                    <kendo-chart-title text="Channel Y"></kendo-chart-title>
+
+
+                    <kendo-chart-value-axis>
+                        <kendo-chart-value-axis-item [labels]="{ format: 'n3' }" [majorGridLines]="{ visible: true }"
+                            [minorGridLines]="{ visible: false }" [majorUnit]=" 0.004" [title]="{ text: 'milli(g)' }">
+                        </kendo-chart-value-axis-item>
+                    </kendo-chart-value-axis>
+
+                    <kendo-chart-series>
+                        <kendo-chart-series-item [data]="yData" type="line" [markers]="{ visible: false }"
+                            style="pointer-events: none;">
+                        </kendo-chart-series-item>
+                    </kendo-chart-series>
+                </kendo-chart>
+            </div>
+
+
+
+
+
         </div>
-    </div>
-    <div class="row1">
         <div class="bar-chart-container">
             <kendo-chart>
-                <kendo-chart-title text="Predicted Fault History"></kendo-chart-title>
+                <kendo-chart-title
+                    text="Predicted Fault History ({{formattedFromDateTime}} - {{formattedToDateTime}})"></kendo-chart-title>
+
                 <kendo-chart-category-axis>
                     <kendo-chart-category-axis-item [categories]="faultCategories" [line]="{ visible: false }">
                     </kendo-chart-category-axis-item>
@@ -105,11 +134,14 @@
                 </kendo-chart-value-axis>
 
                 <kendo-chart-series>
-                    <kendo-chart-series-item type="bar" [data]="faultData" color="#5687F2">
+                    <!-- Bind data, specify the fields, and use colorField to apply custom colors -->
+                    <kendo-chart-series-item type="bar" [data]="faultData" categoryField="category" field="value"
+                        colorField="color">
                     </kendo-chart-series-item>
                 </kendo-chart-series>
             </kendo-chart>
         </div>
+
     </div>
 
 

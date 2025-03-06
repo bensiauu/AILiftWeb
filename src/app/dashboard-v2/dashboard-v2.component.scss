@@ -38,25 +38,10 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #E3E9EE;
     transition: box-shadow 0.3s ease;
-    border-left: 10px solid transparent;
+    border-left: 10px solid #66BB6A;
     flex-grow: 1;
 }
 
-.lift-card.normal {
-    border-left-color: green;
-}
-
-.lift-card.faulty {
-    border-left-color: red;
-}
-
-.lift-card.maintenance {
-    border-left-color: orange;
-}
-
-.lift-card.offline {
-    border-left-color: grey;
-}
 
 .lift-card:hover {
     transform: translateY(-5px);
